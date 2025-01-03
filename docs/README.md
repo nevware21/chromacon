@@ -1,6 +1,6 @@
+
 <h1 align="center">@nevware21/chromacon</h1>
 <h2 align="center">Text formatting utilities to colorize your text output.</h2>
-
 
 ![GitHub Workflow Status (main)](https://img.shields.io/github/actions/workflow/status/nevware21/chromacon/ci.yml?branch=main)
 [![codecov](https://codecov.io/gh/nevware21/chromacon/branch/main/graph/badge.svg?token=KA05820FMO)](https://codecov.io/gh/nevware21/chromacon)
@@ -10,13 +10,12 @@
 
 ## Description
 
-### Test Environments 
-- Node (16, 18, 20)
-- Browser (Chromium - headless)
-- Web Worker (Chromium - headless)
+This library provides utilities to colorize your text output, whether that is to the console (node or browser) or as HTML.
 
-### Documentation and details
+Provided implementations:
+- Node console (TBD)
+- Browser (Not yet implemented)
 
-See the documentation [generated from source code](https://nevware21.github.io/chromacon/typedoc/index.html) via typedoc for a full list and details of all of the available types, functions, interfaces with included examples.
+## Documentation
 
-See [Browser Support](#browser-support) for details on the supported browser environments.
+Documentation [generated from source code](https://nevware21.github.io/chromacon/typedoc/index.html) via typedoc

@@ -1,0 +1,149 @@
+{
+    "name": "@nevware21/chromacon",
+    "description": "Text formating utilities to colorize your text output.",
+    "version": "0.0.0",
+    "homepage": "https://github.com/nevware21/chromacon",
+    "sideEffects": false,
+    "license": "MIT",
+    "author": {
+        "name": "NevWare21 Solutions LLC",
+        "email": "github+chromacon@nevware21.com"
+    },
+    "keywords": [
+        "typescript",
+        "javascript",
+		"color",
+		"colour",
+		"colors",
+		"colours",
+		"terminal",
+		"console",
+		"ansi",
+		"style",
+		"styles",
+		"formatting",
+		"rgb",
+		"log",
+		"logging",
+		"text"
+    ],
+    "main": "core/dist/es5/main/chromacon.js",
+    "esnext:main": "core/dist/es6/main/chromacon.js",
+    "module": "core/dist/es5/mod/chromacon.js",
+    "esnext": "core/dist/es6/mod/chromacon.js",
+    "types": "core/dist/types/chromacon.d.ts",
+    "scripts": {
+        "postinstall": "node common/scripts/install-run-rush.js update --full",
+        "build": "rush build && npm run pre-proc -- -restore",
+        "rebuild": "rush rebuild && npm run pre-proc -- -restore && npm run size",
+        "test": "rush test",
+        "lint": "grunt chromacon-lint",
+        "coverage:report": "npm run coverage:nyc && npm run coverage:merge",
+        "coverage:nyc": "nyc report --reporter=json",
+        "coverage:merge": "merge-coverage",
+        "codecov": "npm run coverage:report",
+        "clean": "git clean -xdf && npm install",
+        "cleanBuild": "npm run clean && npm run rebuild && npm run docs",
+        "docs": "typedoc",
+        "rush-update": "rush update --recheck --purge --full",
+        "test:browser": "cd core && npm run test:browser",
+        "test:node": "cd core && npm run test:node",
+        "test:worker": "cd core && npm run test:worker",
+        "debug:browser": "cd core && npm run debug:browser",
+        "debug:worker": "cd core && npm run debug:worker",
+        "prep-release": "npm run cleanBuild && npm run npm-pack",
+        "npm-pack": "copyfiles README.md LICENSE core && cd core && npm pack",
+        "npm-publish": "cd tools/release-tools/npm-publish && npm install && cd ../../.. && npm run do-npm-publish --prefix tools/release-tools/npm-publish --",
+        "pre-proc": "ts-preproc -C ./pre-proc.json",
+        "size": "size-limit"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nevware21/chromacon.git"
+    },
+    "bugs": {
+        "url": "https://github.com/nevware21/chromacon/issues"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/nevware21/chromacon/blob/main/LICENSE"
+        }
+    ],
+    "engines": {
+        "node": ">= 0.8.0"
+    },
+    "dependencies": {
+        "@nevware21/ts-utils": ">= 0.11.5 < 2.x"
+    },
+    "devDependencies": {
+        "@istanbuljs/nyc-config-typescript": "^1.0.2",
+        "@microsoft/rush": "5.147.1",
+        "@nevware21/grunt-eslint-ts": "^0.5.1",
+        "@nevware21/grunt-ts-plugin": "^0.5.1",
+        "@nevware21/coverage-tools": "^0.1.4",
+        "@nevware21/ts-preproc": "^0.1.4",
+        "@nevware21/publish-npm": "^0.1.4",
+        "@size-limit/esbuild-why": "11.1.4",
+        "@size-limit/preset-small-lib": "11.1.4",
+        "@types/chai": "^5.0.0",
+        "@types/eslint": "^8.56.10",
+        "@types/estree": "^1.0.0",
+        "@types/jquery": "^3.5.14",
+        "@types/mocha": "^10.0.1",
+        "@types/sinon": "^10.0.11",
+        "@typescript-eslint/eslint-plugin": "^7.14.1",
+        "@typescript-eslint/parser": "^7.14.1",
+        "copyfiles": "^2.4.1",
+        "eslint": "^8.56.0",
+        "eslint-formatter-codeframe": "^7.32.1",
+        "eslint-plugin-security": "^1.7.1",
+        "grunt": "^1.5.3",
+        "grunt-cli": "^1.4.3",
+        "nyc": "^17.0.0",
+        "puppeteer": "22.6.5",
+        "size-limit": "11.1.4",
+        "typedoc": "^0.26.2",
+        "typescript": "^4.9.5"
+    },
+    "size-limit": [
+        {
+            "name": "es5-full",
+            "path": "core/dist/es5/mod/chromacon.js",
+            "limit": "10 kb",
+            "brotli": false
+        },
+        {
+            "name": "es6-full",
+            "path": "core/dist/es6/mod/chromacon.js",
+            "limit": "10 kb",
+            "brotli": false
+        },
+        {
+            "name": "es5-zip",
+            "path": "core/dist/es5/mod/chromacon.js",
+            "limit": "5 Kb",
+            "gzip": true
+        },
+        {
+            "name": "es6-zip",
+            "path": "core/dist/es6/mod/chromacon.js",
+            "limit": "5 Kb",
+            "gzip": true
+        },
+        {
+            "name": "es5-strip",
+            "path": "core/dist/es5/mod/chromacon.js",
+            "limit": "2 kb",
+            "import": "{ stripAnsi }",
+            "brotli": false
+        },
+        {
+            "name": "es5-support",
+            "path": "core/dist/es5/mod/chromacon.js",
+            "limit": "7 kb",
+            "import": "{ isColorSupported }",
+            "brotli": false
+        }
+    ]
+}
