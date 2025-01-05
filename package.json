@@ -111,39 +111,45 @@
             "name": "es5-full",
             "path": "core/dist/es5/mod/chromacon.js",
             "limit": "10 kb",
-            "brotli": false
+            "brotli": false,
+            "ignore": [ "process", "os" ]
         },
         {
             "name": "es6-full",
             "path": "core/dist/es6/mod/chromacon.js",
             "limit": "10 kb",
-            "brotli": false
+            "brotli": false,
+            "ignore": [ "process", "os" ]
         },
         {
             "name": "es5-zip",
             "path": "core/dist/es5/mod/chromacon.js",
             "limit": "5 Kb",
-            "gzip": true
+            "gzip": true,
+            "ignore": [ "process", "os" ]
         },
         {
             "name": "es6-zip",
             "path": "core/dist/es6/mod/chromacon.js",
             "limit": "5 Kb",
-            "gzip": true
+            "gzip": true,
+            "ignore": [ "process", "os" ]
         },
         {
             "name": "es5-strip",
             "path": "core/dist/es5/mod/chromacon.js",
             "limit": "2 kb",
             "import": "{ stripAnsi }",
-            "brotli": false
+            "brotli": false,
+            "ignore": [ "process", "os" ]
         },
         {
             "name": "es5-support",
             "path": "core/dist/es5/mod/chromacon.js",
             "limit": "7 kb",
             "import": "{ isColorSupported }",
-            "brotli": false
+            "brotli": false,
+            "ignore": [ "process", "os" ]
         }
     ]
 }

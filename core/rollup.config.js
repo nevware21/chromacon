@@ -118,7 +118,7 @@ const rollupConfigFactory = (srcPath, destPath, isMinified, path, format = "iife
                 "os": "os"
             }
         },
-        external: [ "fs", "path", "os" ],
+        external: [ "fs", "path", "process", "os" ],
         plugins: [
             sourcemaps(),
             nodeResolve({
@@ -127,7 +127,9 @@ const rollupConfigFactory = (srcPath, destPath, isMinified, path, format = "iife
                 preferBuiltins: true,
                 mainFields: mainFields
             }),
-            commonjs(),
+            commonjs({
+                ignore: [ "fs", "path", "process", "os"]
+            }),
             cleanup({
                 comments: [
                     /[#@]__/,
@@ -197,7 +199,7 @@ const rollupConfigMainEntry = (srcPath, destPath, path, format = "umd") => {
                 "os": "os"
             }
         },
-        external: [ "fs", "path", "@nevware21/ts-utils", "os" ],
+        external: [ "fs", "path", "@nevware21/ts-utils", "process", "os" ],
         plugins: [
             sourcemaps(),
             cleanup({

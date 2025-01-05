@@ -185,19 +185,27 @@ describe("detectColorSupport", () => {
 
     if (isNode()) {
         describe("node native os", () => {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            let os = require("os");
-            if (os && os.release && process.platform == "win32") {
-                let ver = (os.release() || "").split(".");
-                if (ver[0] >= 10 && ver[2] >= 14931) {
-                    assert.equals(detectColorSupport(), ColorLevel.TrueColor);
-                } else if (ver[0] >= 10 && ver[2] >= 10586) {
-                    assert.equals(detectColorSupport(), ColorLevel.Rgb256);
-                } else {
-                    assert.equals(detectColorSupport(), ColorLevel.Basic);
-                }
-            } else {
+
+            // Check if CI environment is detected
+            let env = process.env || {} as NodeJS.ProcessEnv;
+            if ("TF_BUILD" in env && "AGENT_NAME" in env) {
+                // DevOps environment
                 assert.equals(detectColorSupport(), ColorLevel.Basic);
+            } else {
+                // eslint-disable-next-line @typescript-eslint/no-var-requires
+                let os = require("os");
+                if (os && os.release && process.platform == "win32") {
+                    let ver = (os.release() || "").split(".");
+                    if (ver[0] >= 10 && ver[2] >= 14931) {
+                        assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                    } else if (ver[0] >= 10 && ver[2] >= 10586) {
+                        assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                    } else {
+                        assert.equals(detectColorSupport(), ColorLevel.Basic);
+                    }
+                } else {
+                    assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                }
             }
         });
     }

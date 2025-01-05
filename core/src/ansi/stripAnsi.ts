@@ -28,22 +28,22 @@ import { isNullOrUndefined } from "@nevware21/ts-utils";
 //   /\x8f[\x20-\x7f]/
 // DCS - Device Control String Sequence: ESC P ... ST or \x90 ... ST
 //   - terminated by a BEL (0x07), ST (0x9C), or ESC \ (0x1B 0x5C)
-//   /\x1bP[^\x9c\x07\x1b]*(?:[\x07\x9c]|\x1b\\)
+//   /\x1bP[\x08-\x0d\x20-\x7e]*(?:[\x07\x9c]|\x1b\\)
 // CSI - Control Sequence Introducer ESC [ ... or \x9b ...
 // - terminated by a character in the range 0x40–0x7E
 // /\x1b\[[\x30-\x3f]*[\x40-\x7e]/
 // OSC - Operating System Command Sequence: ESC ] ... or \x9d ...
 //   - terminated by a BEL (0x07), ST (0x9C), or ESC \ (0x1B 0x5C)
-//   /\x1b\][^\x07\x1b\x9c]*(?:[\x07\x9c]|\x1b\\)
+//   /\x1b\][x08-\x0d\x20-\x7e]*(?:[\x07\x9c]|\x1b\\)
 // SOS - Start of String Sequence: ESC X ... or \x98 ...
 //   - terminated by a BEL (0x07), ST (0x9C), or ESC \ (0x1B 0x5C)
 //   /\x1bX[^\x9c\x07\x1b]*(?:[\x07\x9c]|\x1b\\)
 // PM - Privacy Message Sequence: ESC ^ ... or \x9e ...
 //   - terminated by a BEL (0x07), ST (0x9C), or ESC \ (0x1B 0x5C)
-//   /\x1b\^[^\x9c\x07\x1b]*(?:[\x07\x9c]|\x1b\\)
+//   /\x1b\^[x08-\x0d\x20-\x7e]*(?:[\x07\x9c]|\x1b\\)
 // APC - Application Program Command Sequence: ESC _ ... or \x9f ...
 //   - terminated by a BEL (0x07), ST (0x9C), or ESC \ (0x1B 0x5C)
-//   /\x1b_[^\x9c\x07\x1b]*(?:[\x07\x9c]|\x1b\\)
+//   /\x1b_[x08-\x0d\x20-\x7e]*(?:[\x07\x9c]|\x1b\\)
 // SCI - Single Character Introducer: ESC Z ... or \x9a ...
 //   - single character in the range 0x20–0x7e or 0x08–0x0d
 //   /\x1bZ[\x20-\x7e\x08-\x0d]/
@@ -99,8 +99,8 @@ import { isNullOrUndefined } from "@nevware21/ts-utils";
 // nF Sequence: ESC 0x20—0x2F ... ( !"#$%&'()*+,-./)+  0x30-0x7E (0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`a-z{|}~)
 
 // eslint-disable-next-line no-control-regex
-const STRIP_ANSI_REGEXP = /(?:(?:\x1b\[|\x9b)[\x30-\x3f]*[\x40-\x7e]|(?:\x1b[\]P_^X]|[\x90\x98\x9d-\x9f])[^\x9c\x07\x1b]*(?:[\x07\x9c]|\x1b\\)|\x1b[\x20-\x2f]+[\x30-\x7e]|(?:\x1b[0356]n{0,1})|(?:\x1b[124\x37-\x4fQ-WYZ\\\x60-\x7e]|[\x80-\x8f\x91-\x9a\x9c]))/g;
-//                            <= CSI                              =>|<= OSC/DSC/APC/PM/SOS                                                  =>|<= nF                    =>|<= VT100 DSR      =>|<= Fp/Fe/Fs                                                  =>
+const STRIP_ANSI_REGEXP = /(?:(?:\x1b\[|\x9b)[\x30-\x3f]*[\x40-\x7e]|(?:(?:\x1bX|\x98)[^\x98\x9c\x07\x1b]*|(?:\x1b[\]P_^]|[\x90\x9d-\x9f])[\x08-\x0d\x20-\x7e]*)(?:[\x07\x9c]|\x1b\\)|\x1b[\x20-\x2f]+[\x30-\x7e]|(?:\x1b[0356]n{0,1})|(?:\x1b[124\x37-\x4fQ-WYZ\\\x60-\x7e]|[\x80-\x8f\x91-\x9a\x9c]))/g;
+//                            <= CSI                              =>|<= SOS (Term with ST)              =>|<= OSC/DSC/APC/PM (Term with ST)           =><=-- ST          --=>|<= nF                    =>|<= VT100 DSR      =>|<= Fp/Fe/Fs                                                  =>
 
 /**
  * Strip ANSI escape codes from a string.
