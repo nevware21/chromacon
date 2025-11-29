@@ -1,6 +1,6 @@
 /*
  * ts-async
- * https://github.com/nevware21/ts-async
+ * https://github.com/nevware21/chromacon
  *
  * Copyright (c) 2022 NevWare21 Solutions LLC
  * Licensed under the MIT license.

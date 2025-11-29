@@ -2,12 +2,12 @@
  * @nevware21/chromacon
  * https://github.com/nevware21/chromacon
  *
- * Copyright (c) 2024 NevWare21 Solutions LLC
+ * Copyright (c) 2025 NevWare21 Solutions LLC
  * Licensed under the MIT license.
  */
 
 import { objHasOwnProperty } from "@nevware21/ts-utils";
-import { CodeTable, CodeTableDetail } from "../interfaces/types";
+import { CodeTable, ICodeTableDetail } from "../interfaces/types";
 import { eFeCode } from "../enums/FeCode";
 
 /**
@@ -22,7 +22,7 @@ export function isValidCode(table: CodeTable, code: number): boolean {
  * Get code name and description.
  * @param code Code to get.
  */
-export function getCodeDetails(table: CodeTable, code: number): CodeTableDetail | null {
+export function getCodeDetails(table: CodeTable, code: number): ICodeTableDetail | null {
     return table[code];
 }
 

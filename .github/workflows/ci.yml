@@ -7,6 +7,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
+  merge_group:
     branches: [ main ]
 
 jobs:
@@ -18,13 +19,13 @@ jobs:
 
     strategy:
       matrix:
-        node: [ 16, 18, 20 ]
+        node: [ 16, 18, 20, 22 ]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Use Node.js ${{ matrix.node }}
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: ${{ matrix.node }}
     - name: Update rush shrinkwrap dependencies
@@ -42,11 +43,17 @@ jobs:
       run: npm run codecov
     
     - name: Upload Coverage
-      uses: codecov/codecov-action@v2
+      uses: codecov/codecov-action@v5
       with:
         files: ./coverage/coverage-final.json
         token: ${{ secrets.CODECOV_TOKEN }}
         
     - name: Size tests
-      if: matrix.node == 20 || matrix.node == 18 # Only run size tests on the latest Node.js versions
+      if: matrix.node == 22 || matrix.node == 20 || matrix.node == 18 # Only run size tests on the latest Node.js versions
       run: npm run size
+
+    - name: Bundle Size Checks
+      run: npm run size-check
+
+    - name: Docs link check
+      run: npm run readme-link-check

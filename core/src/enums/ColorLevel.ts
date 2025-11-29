@@ -2,11 +2,17 @@
  * @nevware21/chromacon
  * https://github.com/nevware21/chromacon
  *
- * Copyright (c) 2024 NevWare21 Solutions LLC
+ * Copyright (c) 2025 NevWare21 Solutions LLC
  * Licensed under the MIT license.
  */
 
 export const enum ColorLevel {
+
+    /**
+     * Automatically detect the color level
+     */
+    AutoDetect = -1,
+
     /**
      * Color is not supported or specifically disabled
      */
@@ -20,10 +26,10 @@ export const enum ColorLevel {
     /**
      * Standard 256 (8-bit) colors is supported / enabled
      */
-    Rgb256 = 2,
+    Ansi256 = 2,
 
     /**
      * True color (24-bit) is supported / enabled
      */
-    TrueColor = 3
+    Rgb = 3
 }

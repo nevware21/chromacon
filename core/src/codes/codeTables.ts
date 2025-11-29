@@ -2,20 +2,21 @@
  * @nevware21/chromacon
  * https://github.com/nevware21/chromacon
  *
- * Copyright (c) 2024 NevWare21 Solutions LLC
+ * Copyright (c) 2025 NevWare21 Solutions LLC
  * Licensed under the MIT license.
  */
 
-import { CodeTable, CodeTableDetail } from "../interfaces/types";
+import { CodeTable, ICodeTableDetail } from "../interfaces/types";
 
-function codeDetails(abbr: string, name: string): CodeTableDetail {
+/* #__NO_SIDE_EFFECTS__*/
+function codeDetails(abbr: string, name: string): ICodeTableDetail {
     return { abbr, name };
 }
 
 /**
  * Lookup table for FE codes.
  */
-const feCodeTable: CodeTable = {
+const feCodeTable: CodeTable = (/* #__PURE__ */{
     0x80: codeDetails("PAD", "Padding Character" ),
     0x81: codeDetails("HOP", "High Octet Preset" ),
     0x82: codeDetails("BPH", "Break Permitted Here" ),
@@ -48,4 +49,4 @@ const feCodeTable: CodeTable = {
     0x9D: codeDetails("OSC", "Operating System Command" ),
     0x9E: codeDetails("PM", "Privacy Message" ),
     0x9F: codeDetails("APC", "Application Program Command" )
-};
+});

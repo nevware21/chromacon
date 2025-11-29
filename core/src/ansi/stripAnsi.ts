@@ -2,7 +2,7 @@
  * @nevware21/chromacon
  * https://github.com/nevware21/chromacon
  *
- * Copyright (c) 2024 NevWare21 Solutions LLC
+ * Copyright (c) 2025 NevWare21 Solutions LLC
  * Licensed under the MIT license.
  */
 
@@ -100,13 +100,24 @@ import { isNullOrUndefined } from "@nevware21/ts-utils";
 
 // eslint-disable-next-line no-control-regex
 const STRIP_ANSI_REGEXP = /(?:(?:\x1b\[|\x9b)[\x30-\x3f]*[\x40-\x7e]|(?:(?:\x1bX|\x98)[^\x98\x9c\x07\x1b]*|(?:\x1b[\]P_^]|[\x90\x9d-\x9f])[\x08-\x0d\x20-\x7e]*)(?:[\x07\x9c]|\x1b\\)|\x1b[\x20-\x2f]+[\x30-\x7e]|(?:\x1b[0356]n{0,1})|(?:\x1b[124\x37-\x4fQ-WYZ\\\x60-\x7e]|[\x80-\x8f\x91-\x9a\x9c]))/g;
-//                            <= CSI                              =>|<= SOS (Term with ST)              =>|<= OSC/DSC/APC/PM (Term with ST)           =><=-- ST          --=>|<= nF                    =>|<= VT100 DSR      =>|<= Fp/Fe/Fs                                                  =>
+//                            <= CSI                              =>|<= SOS (Term with ST)              =>|<= OSC/DSC/APC/PM (Term with ST)           =><=-- ST                  --=>|<= nF                    =>|<= VT100 DSR      =>|<= Fp/Fe/Fs                                                  =>
 
 /**
  * Strip ANSI escape codes from a string.
  * @param value - The string to strip.
  * @returns The string without ANSI escape codes.
+ * @example
+ * ```ts
+ * stripAnsi("\u001b[31municorn\u001b[39m");
+ * //=> 'unicorn'
+ *
+ * stripAnsi("\u001b]8;;https://github.com\u0007Click\u001b]8;;\u0007");
+ * //=> 'Click'
+ *
+ * stripAnsi("\u001b[38;2;255;0;0mHello \u001b[0mDarkness \u001B[00;38;5;244m\u001B[m\u001B[00;38;5;33mmy \u001B[0mold");
+ * //=> "Hello Darkness my old"
  */
+/*#__NO_SIDE_EFFECTS__*/
 export function stripAnsi(value: string): string {
     return (value && value.replace) ? value.replace(STRIP_ANSI_REGEXP, "") : value;
 }
@@ -115,7 +126,19 @@ export function stripAnsi(value: string): string {
  * Match ANSI escape codes in a string.
  * @param value - The string to match.
  * @returns The ANSI escape codes.
+ * @example
+ * ```ts
+ * matchAnsi("\u001b[31municorn\u001b[39m");
+ * //=> ['\u001b[31m', '\u001b[39m']
+ *
+ * matchAnsi("\u001b]8;;https://github.com\u0007Click\u001b]8;;\u0007");
+ * //=> ['\u001b]8;;https://github.com\u0007', '\u001b]8;;\u0007']
+ *
+ * matchAnsi("\u001b[38;2;255;0;0mHello \u001b[0mDarkness \u001B[00;38;5;244m\u001B[m\u001B[00;38;5;33mmy \u001B[0mold");
+ * //=> ["\u001b[38;2;255;0;0m", "\u001b[0m", "\u001B[00;38;5;244m", "\u001B[m", "\u001B[00;38;5;33m", "\u001B[0m"]
+ * ```
  */
+/*#__NO_SIDE_EFFECTS__*/
 export function matchAnsi(value: string): string[] {
     return (value && value.match) ? value.match(STRIP_ANSI_REGEXP) || [] : [];
 }
@@ -125,6 +148,7 @@ export function matchAnsi(value: string): string[] {
  * @param value - The string to parse.
  * @returns The parsed ANSI escape codes and the string components.
  */
+/*#__NO_SIDE_EFFECTS__*/
 export function parseAnsi(value: string): string[] {
     const result: string[] = [];
     let match: RegExpExecArray | null;
