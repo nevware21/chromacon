@@ -2,19 +2,28 @@
  * @nevware21/chromacon
  * https://github.com/nevware21/chromacon
  *
- * Copyright (c) 2024 NevWare21 Solutions LLC
+ * Copyright (c) 2025 NevWare21 Solutions LLC
  * Licensed under the MIT license.
  */
 
 import { assert } from "@nevware21/tripwire";
-import { detectColorSupport, getColorLevel, isColorSupported, isRgb256ColorSupported, isTrueColorSupported, setColorLevel } from "../../../src/utils/supported";
+import { getColorLevel, isColorSupported, isRgb256ColorSupported, isTrueColorSupported, setColorLevel } from "../../../src/utils/supported";
+import { _detectColorSupport } from "../../../src/utils/_detect";
 import { ColorLevel } from "../../../src/enums/ColorLevel";
 import { getGlobal, isNode, objDefine, setBypassLazyCache } from "@nevware21/ts-utils";
+import { _resetRuntime } from "../../../src/utils/runtime";
 
 describe("isColorSupported", () => {
     beforeEach(() => {
+        setBypassLazyCache(true);
         // Reset automatic detection
         setColorLevel();
+        _resetRuntime();
+    });
+
+    afterEach(() => {
+        setBypassLazyCache(false);
+        _resetRuntime();
     });
 
     describe("setColorLevel: None", () => {
@@ -64,21 +73,21 @@ describe("isColorSupported", () => {
     describe("setColorLevel: Rgb256", () => {
         beforeEach(() => {
             // Reset automatic detection
-            setColorLevel(ColorLevel.Rgb256);
+            setColorLevel(ColorLevel.Ansi256);
         });
 
         it("should return true when the environment supports true color", () => {
-            assert.equals(getColorLevel(), ColorLevel.Rgb256);
+            assert.equals(getColorLevel(), ColorLevel.Ansi256);
             assert.isTrue(isColorSupported());
         });
     
         it("should return true when the environment supports 256 colors", () => {
-            assert.equals(getColorLevel(), ColorLevel.Rgb256);
+            assert.equals(getColorLevel(), ColorLevel.Ansi256);
             assert.isTrue(isRgb256ColorSupported());
         });
     
         it("should return true when the environment supports true (16m) colors", () => {
-            assert.equals(getColorLevel(), ColorLevel.Rgb256);
+            assert.equals(getColorLevel(), ColorLevel.Ansi256);
             assert.isFalse(isTrueColorSupported());
         });
     });
@@ -86,21 +95,21 @@ describe("isColorSupported", () => {
     describe("setColorLevel: TrueColor", () => {
         beforeEach(() => {
             // Reset automatic detection
-            setColorLevel(ColorLevel.TrueColor);
+            setColorLevel(ColorLevel.Rgb);
         });
 
         it("should return true when the environment supports true color", () => {
-            assert.equals(getColorLevel(), ColorLevel.TrueColor);
+            assert.equals(getColorLevel(), ColorLevel.Rgb);
             assert.isTrue(isColorSupported());
         });
     
         it("should return true when the environment supports 256 colors", () => {
-            assert.equals(getColorLevel(), ColorLevel.TrueColor);
+            assert.equals(getColorLevel(), ColorLevel.Rgb);
             assert.isTrue(isRgb256ColorSupported());
         });
     
         it("should return true when the environment supports true (16m) colors", () => {
-            assert.equals(getColorLevel(), ColorLevel.TrueColor);
+            assert.equals(getColorLevel(), ColorLevel.Rgb);
             assert.isTrue(isTrueColorSupported());
         });
     });
@@ -109,6 +118,7 @@ describe("isColorSupported", () => {
 describe("detectColorSupport", () => {
     beforeEach(() => {
         setBypassLazyCache(true);
+        _resetRuntime();
 
         // Reset automatic detection
         setColorLevel();
@@ -116,6 +126,7 @@ describe("detectColorSupport", () => {
 
     afterEach(() => {
         setBypassLazyCache(false);
+        _resetRuntime();
     });
 
     describe("navigator", () => {
@@ -149,7 +160,7 @@ describe("detectColorSupport", () => {
                 }
             } as any;
 
-            assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+            assert.equals(_detectColorSupport(), ColorLevel.Rgb);
 
             theNavigator = originalNavigator;
         });
@@ -160,8 +171,9 @@ describe("detectColorSupport", () => {
                 theNavigator = {
                     userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Safari/537.36"
                 } as any;
+                _resetRuntime();
         
-                assert.equals(detectColorSupport(), ColorLevel.None);
+                assert.equals(_detectColorSupport(), ColorLevel.None);
         
             } finally {
                 theNavigator = originalNavigator;
@@ -175,7 +187,7 @@ describe("detectColorSupport", () => {
                     userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4606.81 Safari/537.36"
                 } as any;
         
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
         
             } finally {
                 theNavigator = originalNavigator;
@@ -190,21 +202,21 @@ describe("detectColorSupport", () => {
             let env = process.env || {} as NodeJS.ProcessEnv;
             if ("TF_BUILD" in env && "AGENT_NAME" in env) {
                 // DevOps environment
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
             } else {
                 // eslint-disable-next-line @typescript-eslint/no-var-requires
                 let os = require("os");
                 if (os && os.release && process.platform == "win32") {
                     let ver = (os.release() || "").split(".");
                     if (ver[0] >= 10 && ver[2] >= 14931) {
-                        assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                        assert.equals(_detectColorSupport(), ColorLevel.Rgb);
                     } else if (ver[0] >= 10 && ver[2] >= 10586) {
-                        assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                        assert.equals(_detectColorSupport(), ColorLevel.Ansi256);
                     } else {
-                        assert.equals(detectColorSupport(), ColorLevel.Basic);
+                        assert.equals(_detectColorSupport(), ColorLevel.Basic);
                     }
                 } else {
-                    assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                    assert.equals(_detectColorSupport(), ColorLevel.Rgb);
                 }
             }
         });
@@ -231,6 +243,7 @@ describe("detectColorSupport", () => {
             objDefine(global, "process", {
                 g: () => theProcess
             });
+            _resetRuntime();
         });
 
         afterEach(() => {
@@ -240,76 +253,77 @@ describe("detectColorSupport", () => {
             objDefine(global, "process", {
                 g: () => orgProcess
             });
+            _resetRuntime();
         });
 
         it("should detect color support based on FORCE_COLOR environment variable", () => {
             const originalEnv = theProcess.env;
             try {
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "true" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "basic" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "ansi" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "ansi16" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "always" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "truecolor" };
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "16m" };
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "full" };
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "256" };
-                assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                assert.equals(_detectColorSupport(), ColorLevel.Ansi256);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "ansi256" };
-                assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                assert.equals(_detectColorSupport(), ColorLevel.Ansi256);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "8bit" };
-                assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                assert.equals(_detectColorSupport(), ColorLevel.Ansi256);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "15" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "16" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "17" };
-                assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                assert.equals(_detectColorSupport(), ColorLevel.Ansi256);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "255" };
-                assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                assert.equals(_detectColorSupport(), ColorLevel.Ansi256);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "256" };
-                assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                assert.equals(_detectColorSupport(), ColorLevel.Ansi256);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "257" };
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "65535" };
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "0" };
-                assert.equals(detectColorSupport(), ColorLevel.None);
+                assert.equals(_detectColorSupport(), ColorLevel.None);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "1" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "2" };
-                assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                assert.equals(_detectColorSupport(), ColorLevel.Ansi256);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "3" };
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
             } finally {
                 theProcess.env = originalEnv;
             }
@@ -319,7 +333,9 @@ describe("detectColorSupport", () => {
             const originalEnv = theProcess.env;
             try {
                 theProcess.env = { ...originalEnv, TERM: "dumb" };
-                assert.equals(detectColorSupport(), ColorLevel.None);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.None);
             } finally {
                 theProcess.env = originalEnv;
             }
@@ -331,13 +347,13 @@ describe("detectColorSupport", () => {
             try {
                 objDefine(theProcess, "platform", { v: "win32" });
                 objDefine(theProcess, "osRelease", { v: () => "10.0.14931" });
-        
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
             } finally {
                 objDefine(theProcess, "platform", { v: originalPlatform });
                 objDefine(theProcess, "osRelease", { v: originalRelease });
             }
-    
         });
     
         it("should detect 256 color support on Windows 10 build 10586", () => {
@@ -346,8 +362,9 @@ describe("detectColorSupport", () => {
             try {
                 objDefine(theProcess, "platform", { v: "win32" });
                 objDefine(theProcess, "osRelease", { v: () => "10.0.10586" });
-        
-                assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Ansi256);
             } finally {
                 objDefine(theProcess, "platform", { v: originalPlatform });
                 objDefine(theProcess, "osRelease", { v: originalRelease });
@@ -360,8 +377,9 @@ describe("detectColorSupport", () => {
             try {
                 objDefine(theProcess, "platform", { v: "win32" });
                 objDefine(theProcess, "osRelease", { v: () => "7.0.10586" });
-        
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
             } finally {
                 objDefine(theProcess, "platform", { v: originalPlatform });
                 objDefine(theProcess, "osRelease", { v: originalRelease });
@@ -372,16 +390,24 @@ describe("detectColorSupport", () => {
             const originalEnv = theProcess.env;
             try {
                 theProcess.env = { ...originalEnv, CI: "true", TRAVIS: "true" };
-                assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Ansi256);
     
                 theProcess.env = { ...originalEnv, CI: "true", GITHUB_ACTIONS: "true" };
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
 
                 theProcess.env = { ...originalEnv, CI: "true", UNKNOWN_HOST: "true" };
-                assert.equals(detectColorSupport(), ColorLevel.None);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.None);
 
                 theProcess.env = { ...originalEnv, CI: "true", CI_NAME: "codeship" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
             } finally {
                 theProcess.env = originalEnv;
             }
@@ -391,7 +417,9 @@ describe("detectColorSupport", () => {
             const originalEnv = theProcess.env;
             try {
                 theProcess.env = { ...originalEnv, TF_BUILD: "true", AGENT_NAME: "AgentName" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
             } finally {
                 theProcess.env = originalEnv;
             }
@@ -401,7 +429,9 @@ describe("detectColorSupport", () => {
             const originalEnv = theProcess.env;
             try {
                 theProcess.env = { ...originalEnv, TEAMCITY_VERSION: "2021.1.1" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
             } finally {
                 theProcess.env = originalEnv;
             }
@@ -411,13 +441,19 @@ describe("detectColorSupport", () => {
             const originalEnv = theProcess.env;
             try {
                 theProcess.env = { ...originalEnv, COLORTERM: "truecolor" };
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
 
                 theProcess.env = { ...originalEnv, COLORTERM: "24bit" };
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
 
                 theProcess.env = { ...originalEnv, COLORTERM: "basic" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
             } finally {
                 theProcess.env = originalEnv;
             }
@@ -427,7 +463,9 @@ describe("detectColorSupport", () => {
             const originalEnv = theProcess.env;
             try {
                 theProcess.env = { ...originalEnv, TERM_PROGRAM: "Apple_Terminal" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
             } finally {
                 theProcess.env = originalEnv;
             }
@@ -437,7 +475,9 @@ describe("detectColorSupport", () => {
             const originalEnv = theProcess.env;
             try {
                 theProcess.env = { ...originalEnv, TERM_PROGRAM: "iTerm.app", TERM_PROGRAM_VERSION: "3.3.0" };
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
             } finally {
                 theProcess.env = originalEnv;
             }
@@ -447,7 +487,9 @@ describe("detectColorSupport", () => {
             const originalEnv = theProcess.env;
             try {
                 theProcess.env = { ...originalEnv, TERM_PROGRAM: "iTerm.app", TERM_PROGRAM_VERSION: "2.9.0" };
-                assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Ansi256);
             } finally {
                 theProcess.env = originalEnv;
             }
@@ -475,6 +517,7 @@ describe("detectColorSupport", () => {
             objDefine(global, "process", {
                 g: () => theProcess
             });
+            _resetRuntime();
         });
 
         afterEach(() => {
@@ -484,52 +527,81 @@ describe("detectColorSupport", () => {
             objDefine(global, "process", {
                 g: () => orgProcess
             });
+            _resetRuntime();
         });
 
         it("should detect color support based on FORCE_COLOR environment variable", () => {
             const originalEnv = theProcess.env;
             try {
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "true" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "basic" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "ansi" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "ansi16" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "always" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "truecolor" };
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "16m" };
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "full" };
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "256" };
-                assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Ansi256);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "ansi256" };
-                assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Ansi256);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "8bit" };
-                assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Ansi256);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "false" };
-                assert.equals(detectColorSupport(), ColorLevel.None);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.None);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "never" };
-                assert.equals(detectColorSupport(), ColorLevel.None);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.None);
 
                 theProcess.env = { ...originalEnv, FORCE_COLOR: "none" };
-                assert.equals(detectColorSupport(), ColorLevel.None);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.None);
             } finally {
                 theProcess.env = originalEnv;
             }
@@ -539,7 +611,9 @@ describe("detectColorSupport", () => {
             const originalEnv = theProcess.env;
             try {
                 theProcess.env = { ...originalEnv, TERM: "dumb" };
-                assert.equals(detectColorSupport(), ColorLevel.None);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.None);
             } finally {
                 theProcess.env = originalEnv;
             }
@@ -549,7 +623,9 @@ describe("detectColorSupport", () => {
             const originalEnv = theProcess.env;
             try {
                 theProcess.env = { ...originalEnv, TERM: "xterm-256color" };
-                assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Ansi256);
             } finally {
                 theProcess.env = originalEnv;
             }
@@ -559,7 +635,9 @@ describe("detectColorSupport", () => {
             const originalEnv = theProcess.env;
             try {
                 theProcess.env = { ...originalEnv, TERM: "xterm-kitty" };
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
             } finally {
                 theProcess.env = originalEnv;
             }
@@ -571,8 +649,9 @@ describe("detectColorSupport", () => {
             try {
                 objDefine(theProcess, "platform", { v: "win32" });
                 objDefine(theProcess, "osRelease", { v: () => "10.0.14931" });
+                _resetRuntime();
         
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
             } finally {
                 objDefine(theProcess, "platform", { v: originalPlatform });
                 objDefine(theProcess, "osRelease", { v: originalRelease });
@@ -586,8 +665,9 @@ describe("detectColorSupport", () => {
             try {
                 objDefine(theProcess, "platform", { v: "win32" });
                 objDefine(theProcess, "osRelease", { v: () => "10.0.10586" });
-        
-                assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Ansi256);
             } finally {
                 objDefine(theProcess, "platform", { v: originalPlatform });
                 objDefine(theProcess, "osRelease", { v: originalRelease });
@@ -600,8 +680,9 @@ describe("detectColorSupport", () => {
             try {
                 objDefine(theProcess, "platform", { v: "win32" });
                 objDefine(theProcess, "osRelease", { v: () => "7.0.10586" });
+                _resetRuntime();
         
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
             } finally {
                 objDefine(theProcess, "platform", { v: originalPlatform });
                 objDefine(theProcess, "osRelease", { v: originalRelease });
@@ -612,16 +693,24 @@ describe("detectColorSupport", () => {
             const originalEnv = theProcess.env;
             try {
                 theProcess.env = { ...originalEnv, CI: "true", TRAVIS: "true" };
-                assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Ansi256);
     
                 theProcess.env = { ...originalEnv, CI: "true", GITHUB_ACTIONS: "true" };
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
 
                 theProcess.env = { ...originalEnv, CI: "true", UNKNOWN_HOST: "true" };
-                assert.equals(detectColorSupport(), ColorLevel.None);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.None);
 
                 theProcess.env = { ...originalEnv, CI: "true", CI_NAME: "codeship" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
             } finally {
                 theProcess.env = originalEnv;
             }
@@ -631,13 +720,19 @@ describe("detectColorSupport", () => {
             const originalEnv = theProcess.env;
             try {
                 theProcess.env = { ...originalEnv, COLORTERM: "truecolor" };
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
 
                 theProcess.env = { ...originalEnv, COLORTERM: "24bit" };
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
 
                 theProcess.env = { ...originalEnv, COLORTERM: "basic" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
             } finally {
                 theProcess.env = originalEnv;
             }
@@ -647,7 +742,9 @@ describe("detectColorSupport", () => {
             const originalEnv = theProcess.env;
             try {
                 theProcess.env = { ...originalEnv, TERM_PROGRAM: "Apple_Terminal" };
-                assert.equals(detectColorSupport(), ColorLevel.Basic);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Basic);
             } finally {
                 theProcess.env = originalEnv;
             }
@@ -657,7 +754,9 @@ describe("detectColorSupport", () => {
             const originalEnv = theProcess.env;
             try {
                 theProcess.env = { ...originalEnv, TERM_PROGRAM: "iTerm.app", TERM_PROGRAM_VERSION: "3.3.0" };
-                assert.equals(detectColorSupport(), ColorLevel.TrueColor);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Rgb);
             } finally {
                 theProcess.env = originalEnv;
             }
@@ -667,7 +766,9 @@ describe("detectColorSupport", () => {
             const originalEnv = theProcess.env;
             try {
                 theProcess.env = { ...originalEnv, TERM_PROGRAM: "iTerm.app", TERM_PROGRAM_VERSION: "2.9.0" };
-                assert.equals(detectColorSupport(), ColorLevel.Rgb256);
+                _resetRuntime();
+
+                assert.equals(_detectColorSupport(), ColorLevel.Ansi256);
             } finally {
                 theProcess.env = originalEnv;
             }
