@@ -114,5 +114,5 @@ package-lock.json
 
 
 #ignore lib Readme
-lib/README.md
-lib/LICENSE
+core/README.md
+core/LICENSE
