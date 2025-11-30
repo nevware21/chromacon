@@ -16,6 +16,8 @@ Chromacon is a powerful, TypeScript/JavaScript library for adding colors and tex
 
 - **Rich Color Support** - Basic 16 colors, 256-color palette, and true color (24-bit RGB)
 - **Text Styling** - Bold, italic, underline, strikethrough, and more
+- **Smart Color Restoration** - Automatic color context restoration when nesting color functions
+- **Output Optimization** - Intelligent removal of redundant ANSI escape sequences for cleaner output
 - **Theming System** - Built-in theme support with multiple themes in upcoming releases
 - **Automatic Detection** - Intelligent color support detection for different environments
 - **Type Safety** - Full TypeScript support with comprehensive type definitions
