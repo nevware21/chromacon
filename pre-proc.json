@@ -1,0 +1,25 @@
+// ------------------------------
+// Pre-processing group definitions
+// ------------------------------
+{
+    "repoRoot": ".",
+    "default": {
+        "group": "chromacon",
+        "definition": "prod"
+    },
+    "groups": {
+        "chromacon": [
+            "./core/src"
+        ]
+    },
+    "definitions": {
+        "prod": {
+        },
+        "debug": {
+            "DEBUG": true
+        },
+        "test": {
+            "TEST": true
+        }
+    }
+}
