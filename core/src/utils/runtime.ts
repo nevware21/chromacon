@@ -89,7 +89,7 @@ function parseLevel(value: string, defValue: ColorLevel | undefined): ColorLevel
             result = ColorLevel.Ansi256;
         } else if (value && /^\d+$/.test(value)) {
             // Parsed as a number
-            let num = value ? parseInt(value, 10) : ColorLevel.Basic;
+            let num = parseInt(value, 10);
             result = ColorLevel.Basic;
             if (num === ColorLevel.Rgb || num === ColorLevel.Ansi256 || num === ColorLevel.Basic || num === ColorLevel.None) {
                 result = num;

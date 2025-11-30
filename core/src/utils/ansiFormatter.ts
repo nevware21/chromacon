@@ -59,7 +59,7 @@ function _getAnsiCsi(colorDef: IColorDef, level: ColorLevel): string {
                 }
             } else {
                 // Assume a style code
-                result = EMPTY_STRING + style
+                result = EMPTY_STRING + style;
             }
         } else {
             result = strCol;
@@ -141,7 +141,6 @@ function _ansiFormatter(colorLevel: ColorLevel, value: string, ansiEnable: strin
             if (lastIndex < value.length) {
                 if (csiCodes.length) {
                     result += csiCodes.join(EMPTY_STRING);
-                    csiCodes = [];
                 }
 
                 result += value.substring(lastIndex);
@@ -160,7 +159,6 @@ function _ansiFormatter(colorLevel: ColorLevel, value: string, ansiEnable: strin
 
                 if (csiCodes.length) {
                     result += csiCodes.join(EMPTY_STRING);
-                    csiCodes = [];
                 }
             }
 

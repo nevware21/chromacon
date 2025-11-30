@@ -178,10 +178,6 @@ const rollupConfigFactory = (srcPath, destPath, isMinified, path, format = "iife
 };
 
 const rollupConfigMainEntry = (srcPath, destPath, path, format = "umd") => {
-    let mainFields = [ "module", "main" ];
-    if (destPath === "es6") {
-        mainFields = [ "esnext", "module", "main" ];
-    }
 
     const taskRollupConfig = {
         input: `./${srcPath}/index.js`,

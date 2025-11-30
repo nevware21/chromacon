@@ -16,7 +16,7 @@ function codeDetails(abbr: string, name: string): ICodeTableDetail {
 /**
  * Lookup table for FE codes.
  */
-const feCodeTable: CodeTable = (/* #__PURE__ */{
+export const feCodeTable: CodeTable = (/* #__PURE__ */{
     0x80: codeDetails("PAD", "Padding Character" ),
     0x81: codeDetails("HOP", "High Octet Preset" ),
     0x82: codeDetails("BPH", "Break Permitted Here" ),
