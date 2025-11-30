@@ -10,7 +10,7 @@
 
 ## Overview
 
-Chromacon is a powerful, TypeScript/JavaScript library for adding colors and text formatting to your console and terminal output. Built with modern development practices, it provides a comprehensive API for creating rich, colorful text output across different environments and color support levels.
+Chromacon is a powerful, lightweight TypeScript/JavaScript library for adding colors and text formatting to your console and terminal output. Built with modern development practices, it provides a comprehensive API for creating rich, colorful text output across different environments and color support levels.
 
 ### Key Features
 
