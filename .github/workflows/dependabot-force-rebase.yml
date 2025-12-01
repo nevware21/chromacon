@@ -17,9 +17,7 @@ jobs:
       - name: Rebase Dependabot PRs
         run: |
           set -euo pipefail
-          for pr in $(gh pr list --author dependabot[bot] --json number,headRefName -q '.[] | "\(.number):\(.headRefName)"'); do
-            num=$(echo $pr | cut -d: -f1)
-            branch=$(echo $pr | cut -d: -f2)
+          gh pr list --author dependabot[bot] --json number,headRefName -q '.[] | "\(.number):\(.headRefName)"' | while IFS=: read -r num branch; do
             echo "Rebasing PR #$num ($branch)"
-            gh pr comment $num --body "@dependabot rebase"
+            gh pr comment "$num" --body "@dependabot rebase"
           done
