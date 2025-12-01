@@ -19,6 +19,7 @@ jobs:
 
       - name: Rebase Dependabot PRs
         run: |
+          set -euo pipefail
           for pr in $(gh pr list --author dependabot[bot] --json number,headRefName -q '.[] | "\(.number):\(.headRefName)"'); do
             num=$(echo $pr | cut -d: -f1)
             branch=$(echo $pr | cut -d: -f2)
