@@ -1,4 +1,4 @@
-name: Dependabot Rebase
+name: Dependabot Force Rebase
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -12,8 +12,3 @@ jobs:
       pull-requests: write   # 👈 allows updating PR metadata
     steps:
       - uses: peter-evans/rebase@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          base: main
-          head: ${{ github.repository_owner }}:${{ github.event.pull_request.head.ref }}
-
