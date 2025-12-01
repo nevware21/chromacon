@@ -5,16 +5,19 @@ on:
       - main
 
 permissions:
-  contents: write        # needed to push commits to PR branches
-  pull-requests: write   # needed to update PR metadata (rebased state)
+  pull-requests: write   # enough to post the comment
 
 jobs:
-  rebase:
+  rebase-dependabot:
     runs-on: ubuntu-latest
     steps:
-      - uses: peter-evans/rebase@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          pull-request: all
-          author: dependabot[bot]
+      - name: Checkout
+        uses: actions/checkout@v4
 
+      - name: Rebase Dependabot PRs
+        run: |
+          set -euo pipefail
+          gh pr list --author dependabot[bot] --json number,headRefName -q '.[] | "\(.number):\(.headRefName)"' | while IFS=: read -r num branch; do
+            echo "Rebasing PR #$num ($branch)"
+            gh pr comment "$num" --body "@dependabot rebase"
+          done
