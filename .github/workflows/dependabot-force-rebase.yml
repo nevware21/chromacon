@@ -18,6 +18,8 @@ jobs:
         uses: cli/cli-action@v2
 
       - name: Rebase Dependabot PRs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           for pr in $(gh pr list --author dependabot[bot] --json number,headRefName -q '.[] | "\(.number):\(.headRefName)"'); do
