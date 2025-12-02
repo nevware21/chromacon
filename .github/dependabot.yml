@@ -16,9 +16,47 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 5
+    groups:
+      dependencies:
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "patch"
+      dev-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+      major-dependencies:
+        dependency-type: "production"
+        update-types:
+          - "major"
+      major-dev-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "major"
 
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/core" # Location of package manifests
     schedule:
       interval: "daily"
     open-pull-requests-limit: 5
+    groups:
+      dependencies:
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "patch"
+      dev-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+      major-dependencies:
+        dependency-type: "production"
+        update-types:
+          - "major"
+      major-dev-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "major"
