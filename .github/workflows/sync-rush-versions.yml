@@ -14,7 +14,7 @@ jobs:
     outputs:
       rush_changed: ${{ steps.detect.outputs.rush_changed }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Detect Rush bump
         id: detect
@@ -31,7 +31,7 @@ jobs:
     needs: detect
     if: needs.detect.outputs.rush_changed == 'true'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
