@@ -150,7 +150,7 @@ console.log(`${red}Error:${reset} ${green}Operation completed${reset}`);
 
 #### Smart Color Restoration
 
-When using string values, Chromacon intelligently restores the previous color state:
+When nesting color functions, Chromacon intelligently restores the previous color state:
 
 ```typescript
 import { red, blue, green } from "@nevware21/chromacon";
