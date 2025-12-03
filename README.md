@@ -39,7 +39,7 @@ npm install @nevware21/chromacon
 ```typescript
 import { red, green, blue, bold, underline, bgYellow } from "@nevware21/chromacon";
 
-// Basic colors
+// Basic colors - function usage (wraps text and auto-resets)
 console.log(red("Error: Something went wrong"));
 console.log(green("Success: Operation completed"));
 console.log(blue("Info: Processing data..."));
@@ -114,29 +114,90 @@ matchAnsi(text)  // Find ANSI codes in text
 
 ## Usage Examples
 
-### Basic Usage
+### Two Ways to Use Chromacon
+
+Chromacon provides two flexible usage patterns:
+
+#### 1. Function Usage (Recommended)
+
+Functions wrap your text and automatically handle color reset:
 
 ```typescript
 import { red, green, bold, italic } from "@nevware21/chromacon";
 
-// Function usage - applies color/style and resets automatically
+// Function wraps text and auto-resets
 console.log(red("This is red text"));
 console.log(bold("This is bold text"));
 
-// String usage - provides raw ANSI codes
-console.log(`${red}This is red text${reset}`);
+// Perfect for simple, single-color text
+console.log(green("Success!"));
 ```
+
+#### 2. String Usage (Advanced)
+
+Use color values directly as strings for fine-grained control:
+
+```typescript
+import { red, green, bold, reset } from "@nevware21/chromacon";
+
+// Manual color control with raw ANSI codes
+console.log(`${red}This is red text${reset}`);
+console.log(`${bold}This is bold text${reset}`);
+
+// Build complex strings with multiple colors
+console.log(`${red}Error:${reset} ${green}Operation completed${reset}`);
+```
+
+#### Smart Color Restoration
+
+When using string values, Chromacon intelligently restores the previous color state:
+
+```typescript
+import { red, blue, green } from "@nevware21/chromacon";
+
+// Nested colors with automatic restoration (within function context)
+console.log(red("Red " + blue("blue") + " back to red"));
+// Output: "Red blue back to red" 
+// The text returns to red after the blue section ends
+
+// Complex nesting
+console.log(red("Error in " + green("file.ts") + " at line 42"));
+// "Error in" and "at line 42" are red, "file.ts" is green
+
+// Mixing both patterns (no restoration in template literals)
+console.log(`${red}Status: ${green("OK")} - continuing...${reset}`);
+// "Status:" is red, "OK" is green, "- continuing..." is plain text (not red)
+// Color restoration only works within function call context, not template literals
+
+// Using function context for restoration
+console.log(red("Status: " + green("OK") + " - continuing..."));
+// "Status:" is red, "OK" is green, "- continuing..." is red (restored!)
+// Color restoration works because the entire string is passed to red()
+```
+
+**Important:** Color restoration automatically tracks and restores the active color when a color function completes, but **only within the string passed to that function**. When using template literals with `${red}` as a string value, the restoration doesn't apply to subsequent text in the template literal since it's outside the function's context.
+
+**Performance Optimization:** The intelligent restoration system also optimizes the output by removing redundant ANSI escape sequences that would be immediately overwritten by subsequent sequences, keeping the output compact and efficient.
 
 ### Combining Colors and Styles
 
 ```typescript
-import { red, blue, bold, underline, bgYellow, black } from "@nevware21/chromacon";
+import { red, blue, bold, underline, bgYellow, black, reset } from "@nevware21/chromacon";
 
-// Nested formatting
+// Function usage - nested formatting with auto-reset
 console.log(red(`Error in ${blue(bold("file.ts"))} at ${underline("line 42")}`));
+// "Error in" and "at" are red, "file.ts" is blue and bold, "line 42" is underlined
 
 // Complex combinations
 console.log(bgYellow(black(bold("WARNING: Critical Issue"))));
+
+// String usage - manual control for complex scenarios
+console.log(`${red}Error: ${bold}Critical${reset}${red} failure in system${reset}`);
+
+// Mix both patterns for flexibility
+const filename = blue(bold("config.json"));
+console.log(`${red}Cannot find ${filename} in directory${reset}`);
+// "Cannot find" and "in directory" are red, "config.json" is blue and bold
 ```
 
 ### Conditional Formatting
