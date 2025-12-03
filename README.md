@@ -157,7 +157,7 @@ import { red, blue, green } from "@nevware21/chromacon";
 
 // Nested colors with automatic restoration (within function context)
 console.log(red("Red " + blue("blue") + " back to red"));
-// Output: "Red blue back to red" 
+// Output: "Red blue back to red"
 // The text returns to red after the blue section ends
 
 // Complex nesting
