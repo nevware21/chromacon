@@ -17,10 +17,36 @@ updates:
       interval: "daily"
     open-pull-requests-limit: 5
     groups:
-      # Group updates for each specific dependency across directories
-      all-dependencies:
+      nevware21:
         patterns:
-          - "*"
+          - "@nevware21/*"
+      types:
+        patterns:
+          - "@types/*"
+      copyfiles:
+        patterns:
+          - "copyfiles"
+      grunt:
+        patterns:
+          - "grunt*"
+      nyc:
+        patterns:
+          - "nyc"
+          - "@istanbuljs/nyc-config-typescript"
+      mocha:
+        patterns:
+          - "*mocha*"
+      puppeteer:
+        patterns:
+          - "puppeteer"
+      rollup:
+        patterns:
+          - "rollup*"
+          - "@rollup/*"
+      typescript:
+        patterns:
+          - "typescript*"
+          - "typedoc"
 
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/core" # Location of package manifests
@@ -28,7 +54,33 @@ updates:
       interval: "daily"
     open-pull-requests-limit: 5
     groups:
-      # Group updates for each specific dependency across directories
-      all-dependencies:
+      nevware21:
         patterns:
-          - "*"
+          - "@nevware21/*"
+      types:
+        patterns:
+          - "@types/*"
+      copyfiles:
+        patterns:
+          - "copyfiles"
+      grunt:
+        patterns:
+          - "grunt*"
+      nyc:
+        patterns:
+          - "nyc"
+          - "@istanbuljs/nyc-config-typescript"
+      mocha:
+        patterns:
+          - "*mocha*"
+      puppeteer:
+        patterns:
+          - "puppeteer"
+      rollup:
+        patterns:
+          - "rollup*"
+          - "@rollup/*"
+      typescript:
+        patterns:
+          - "typescript*"
+          - "typedoc"
