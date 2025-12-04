@@ -23,6 +23,10 @@ Chromacon is a powerful, TypeScript/JavaScript library for adding colors and tex
 - **Minimal Dependencies** - Lightweight with only essential utilities
 - **Flexible API** - Both functional and string-based usage patterns
 
+## API Reference
+
+### [Core API Reference](https://nevware21.github.io/chromacon/typedoc/core/index.html)
+
 ## Quick Example
 
 ```typescript
@@ -47,7 +51,7 @@ npm install @nevware21/chromacon
 ## Resources
 
 - **[Complete Documentation & Examples](https://github.com/nevware21/chromacon/blob/main/README.md)** - Full README with comprehensive examples and API reference
-- **[TypeDoc API Reference](https://nevware21.github.io/chromacon/typedoc/core/index.html)** - Generated API documentation with detailed type information
+- **[TypeDoc API Reference](https://nevware21.github.io/chromacon/#api-reference)** - Generated API documentation with detailed type information
 - **[NPM Package](https://www.npmjs.com/package/@nevware21/chromacon)** - Install and package information
 - **[GitHub Repository](https://github.com/nevware21/chromacon)** - Source code, issues, and contributions
 
