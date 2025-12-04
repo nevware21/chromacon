@@ -24,7 +24,7 @@ Chromacon is a powerful, TypeScript/JavaScript library for adding colors and tex
 
 ## Documentation and Details
 
-See the comprehensive [Core API documentation](https://nevware21.github.io/chromacon/typedoc/core/index.html) generated from source code via TypeDoc for a full list and details of all available types, functions, and interfaces with included examples.
+See the [documentation](https://nevware21.github.io/chromacon/) to access the API docs generated from source code via TypeDoc for a full list and details of all available types, functions, and interfaces with included examples.
 
 See [Browser Support](#browser-support) for details on the supported browser environments.
 
