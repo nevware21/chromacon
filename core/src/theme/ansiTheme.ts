@@ -9,10 +9,15 @@
 import { ITheme } from "../interfaces/ITheme";
 import { createAnsiFormatter } from "../utils/ansiFormatter";
 
+/*#__NO_SIDE_EFFECTS__*/
+function createAnsiTheme(): ITheme {
+    return {
+        getFormatter: createAnsiFormatter
+    };
+}
+
 /**
  * A predefined theme that uses ANSI formatting regardless of the detected system color support.
  * This theme can be used when you want to ensure ANSI formatting is always applied.
  */
-export const ANSI_THEME: ITheme = (/* #__PURE__*/{
-    getFormatter: createAnsiFormatter
-});
+export const ANSI_THEME: ITheme = /*#__PURE__*/ createAnsiTheme();
