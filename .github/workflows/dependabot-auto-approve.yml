@@ -1,0 +1,40 @@
+name: Dependabot Auto Approve
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+  pull-requests: write
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  auto-approve:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Wait for status checks
+        uses: lewagon/wait-on-check-action@v1.3.4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 30
+          running-workflow-name: 'auto-approve'
+          allowed-conclusions: success,skipped,neutral
+          
+      - name: Approve PR
+        if: success()
+        run: gh pr review --approve "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
