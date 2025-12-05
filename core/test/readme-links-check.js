@@ -2,6 +2,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const DOCS_ROOT = "https://nevware21.github.io/chromacon/";
+
 function _createRegEx(value) {
     let escaped = value.replace(/([-+|^$#\.\?\{\}\(\)\[\]\\\/\"\'])/g, "\\$1").replace(/\*/g, "(.*)");
     return new RegExp("(" + escaped + "[^\\)\"'\\s]+)", "gi");
@@ -21,10 +23,12 @@ function _extractLinks(linkRegex, checkFn) {
 }
 
 function _hasLink(allDocLinks, url) {
+    //console.log(`Checking link: ${url}`);
     // Check if the URL is in the set of all documentation links
     for (let lp = 0; lp < allDocLinks.length; lp++) {
         // Check if the URL is in the array of URLs for this link
         for (let idx = 0; idx < allDocLinks[lp].links.length; idx++) {
+            //console.log(` - ${allDocLinks[lp].links[idx]}`);
             if (allDocLinks[lp].links[idx] === url) {
                 return true;
             }
@@ -32,6 +36,28 @@ function _hasLink(allDocLinks, url) {
     }
 
     return false;
+}
+
+function _findClosestLink(allDocLinks, url) {
+    let closest = null;
+    let maxLength = 0;
+
+    allDocLinks.forEach(docLink => {
+        docLink.links.forEach(link => {
+            // Find the length of the longest common prefix between link and url
+            let minLen = Math.min(link.length, url.length);
+            let prefixLen = 0;
+            while (prefixLen < minLen && link[prefixLen] === url[prefixLen]) {
+                prefixLen++;
+            }
+            if (prefixLen > maxLength) {
+                maxLength = prefixLen;
+                closest = link;
+            }
+        });
+    });
+
+    return closest;
 }
 
 function _checkLinks(allDocLinks, docLinks, resolvePathFn, desc) {
@@ -59,9 +85,13 @@ function _checkLinks(allDocLinks, docLinks, resolvePathFn, desc) {
         console.log(`\nAll ${desc} are valid! 🎉`);
     } else {
         console.log(`\n❌ Found ${results.missing.length} missing files:`);
-        results.missing.forEach(({ url, localPath }) => {
+        results.missing.forEach(({ url, localPath, line }) => {
             console.log(`  - ${url}`);
-            console.log(`    Expected: ${localPath}`);
+            console.log(`    Expected....: ${localPath}`);
+            let closest = _findClosestLink(allDocLinks, url);
+            if (closest) {
+                console.log(`    Did you mean: ${closest}?`);
+            }
         });
     }
 
@@ -78,15 +108,33 @@ function _collectDocsFiles(dir, allDocFiles) {
             _collectDocsFiles(fullPath, allDocFiles);
         } else if (stat.isFile() && (item.endsWith('.html') || item.endsWith('.md'))) {
             // Get the relative path from the docs directory
-            const relativePath = path.relative(docsBasePath, fullPath)
+            let relativePath = path.relative(docsBasePath, fullPath)
                 .replace(/\\/g, '/'); // Normalize for URL comparison
 
+            if (relativePath.toLowerCase() === "readme.md") {
+                // Special case for root README.md, is accessed as index.html
+                relativePath = "index.html";
+            }
+
             let fileLinks = [
-                    `https://nevware21.github.io/chromacon/${relativePath.replace(".md", ".html")}`
+                    `${DOCS_ROOT}${relativePath.replace(".md", ".html")}`
                 ];
+
+            // console.log(`Processing file: ${relativePath}`);
+            if (relativePath.toLowerCase() === "index.html") {
+                // Another special case for root index.html, can also be accessed with just the root '/'
+                fileLinks.push(`${DOCS_ROOT}`);
+
+                allDocFiles.push({
+                    path: fullPath,
+                    url: `${DOCS_ROOT}`,
+                    links: fileLinks
+                });
+            }
+
             allDocFiles.push({
                 path: fullPath,
-                url: `https://nevware21.github.io/chromacon/${relativePath}`,
+                url: `${DOCS_ROOT}${relativePath}`,
                 links: fileLinks
             });
 
@@ -98,7 +146,12 @@ function _collectDocsFiles(dir, allDocFiles) {
                 let match; 
                 while ((match = linkRegex.exec(fileContent)) !== null) {
                     let link = match[1].replace(/[^\w\d\s\-]/g, "").replace(/[\s]/g, "-").replace(/--/g, "-").toLowerCase();
-                    fileLinks.push(`https://nevware21.github.io/chromacon/${relativePath.replace(".md", ".html") + "#" + link}`);
+                    fileLinks.push(`${DOCS_ROOT}${relativePath.replace(".md", ".html") + "#" + link}`);
+                    if (relativePath.toLowerCase() === "index.html") {
+                        // Special case for root index.html, can also be accessed with just the root '/'
+                        fileLinks.push(`${DOCS_ROOT}#${link}`);
+                    }
+
                     // console.log(`   - #${link}`);
                 }
             } catch (error) {
@@ -113,8 +166,8 @@ function _collectDocsFiles(dir, allDocFiles) {
 // Configuration
 const readmePath = path.resolve(__dirname, '../../README.md');
 const docsBasePath = path.resolve(__dirname, '../../docs');
-const typedocBaseUrl = 'https://nevware21.github.io/chromacon/typedoc/';
-const docBaseUrl = 'https://nevware21.github.io/chromacon/';
+const typedocBaseUrl = `${DOCS_ROOT}typedoc/`;
+const docBaseUrl = DOCS_ROOT;
 
 console.log('\nChecking README.md links to documentation:');
 console.log('=========================================\n');
@@ -131,6 +184,15 @@ try {
 
 let typeDocResults;
 let docResults;
+
+let escapedDocs = _createRegEx(DOCS_ROOT);
+
+// GitHub advanced security keeps flagging the regex as being incomplete, so do a basic check here
+// to ensure it was created correctly and that it's not changed unexpectedly in the future
+if (escapedDocs.source.startsWith("(https:\\/\\/nevware21\\.github\\.io\\/chromacon\\/") !== true) {
+    console.error(`✗ Error creating escaped docs regex from [${DOCS_ROOT}]: ${escapedDocs.source}`);
+    process.exit(1);
+}
 
 try {
     // Change to collect files and then check the links rather than the filename conversion
@@ -165,7 +227,8 @@ try {
             // Any markdown files are invalid, they should be .html
             return "[" + url + "] it should be a .html link";
         }
-        // console.log(`  - ${url}`);
+        //console.log(`**  - ${url}`);
+        
         // Convert URL to local file path
         return path.join(docsBasePath, relativePath).replace(".html", ".md");
     }, "documentation links");
