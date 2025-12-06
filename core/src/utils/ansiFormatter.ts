@@ -6,7 +6,7 @@
  * Licensed under the MIT license.
  */
 
-import { isArray, isNumber, strEndsWith, strIndexOf } from "@nevware21/ts-utils";
+import { isArray, isNumber, strEndsWith, strIndexOf, strStartsWith } from "@nevware21/ts-utils";
 import { CSIColors } from "../enums/CsiColors";
 import { CSI, EMPTY_STRING, PARSE_CSI_SGI_REGEXP } from "./consts";
 import { IColorDef } from "../interfaces/IColorDef";
@@ -110,9 +110,18 @@ function _ansiFormatter(colorLevel: ColorLevel, value: string, ansiEnable: strin
     let csiCodes: string [] = [];
 
     if (colorLevel) {
-        result = ansiEnable;
+
+        csiCodes = [];
         let idx = strIndexOf(value, CSI);
         if (idx !== -1) {
+            // If the value already starts with the enable or immediately disables the color / style then we can skip adding another enable code
+            if (idx !== 0 || (!strStartsWith(value, ansiEnable) && !strStartsWith(value, ansiDisable))) {
+                result = ansiEnable;
+            } else {
+                // Already starts with the enable code, so we can skip it
+                result = EMPTY_STRING;
+            }
+
             while ((match = PARSE_CSI_SGI_REGEXP.exec(value)) !== null) {
                 if (lastIndex != match.index) {
                     if (csiCodes.length) {
@@ -125,10 +134,16 @@ function _ansiFormatter(colorLevel: ColorLevel, value: string, ansiEnable: strin
                 }
 
                 if (!isReset && match[1] == disableArgs) {
-                    // Reset color found, so re-enable the requested style
-                    csiCodes.push(ansiEnable);
+                    // Reset color found, so re-enable the requested style, but don't add duplicate enable codes
+                    if (!csiCodes.length || csiCodes[csiCodes.length - 1] != ansiEnable) {
+                        csiCodes.push(ansiEnable);
+                    }
                 } else {
-                    csiCodes.push(match[0]);
+                    // Add the existing CSI code, but avoid duplicates
+                    if (!csiCodes.length || csiCodes[csiCodes.length - 1] != match[0]) {
+                        csiCodes.push(match[0]);
+                    }
+
                     if (match[1] == EMPTY_STRING || match[1] == "0") {
                         // Special case -- full reset found, so re-enable the requested style
                         csiCodes = [match[0], ansiEnable];
