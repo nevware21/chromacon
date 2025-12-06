@@ -18,20 +18,52 @@
 		"colours",
 		"terminal",
 		"console",
+		"cli",
+		"tty",
 		"ansi",
+		"ansi-colors",
+		"escape-codes",
 		"style",
 		"styles",
+		"styling",
 		"formatting",
+		"text-decoration",
+		"colorize",
+		"colorise",
 		"rgb",
+		"256-color",
+		"truecolor",
 		"log",
 		"logging",
-		"text"
+		"text",
+		"pretty-print",
+		"cross-platform",
+		"browser",
+		"node",
+		"nodejs",
+		"stdout",
+		"stderr",
+		"chalk",
+		"kleur"
     ],
     "main": "dist/es5/main/chromacon.js",
     "esnext:main": "dist/es6/main/chromacon.js",
     "module": "dist/es5/mod/chromacon.js",
     "esnext": "dist/es6/mod/chromacon.js",
-    "types": "dist/types/chromacon.d.ts",    
+    "types": "dist/types/chromacon.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/types/chromacon.d.ts",
+            "import": "./dist/es6/mod/chromacon.js",
+            "require": "./dist/es5/main/chromacon.js",
+            "default": "./dist/es5/main/chromacon.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "funding": {
+        "type": "github",
+        "url": "https://github.com/sponsors/nevware21"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/nevware21/chromacon.git"
