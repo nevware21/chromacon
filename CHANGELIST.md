@@ -53,7 +53,7 @@ This is the first release of **@nevware21/chromacon** - a powerful, TypeScript/J
   - [#74: Update api-reference links](https://github.com/nevware21/chromacon/pull/74)
   - [#73: Add Dependabot auto approval action](https://github.com/nevware21/chromacon/pull/73)
   - [#72: Update Pure annotations](https://github.com/nevware21/chromacon/pull/72)
-  - [#69: Remote the auto merge action](https://github.com/nevware21/chromacon/pull/69)
+  - [#69: Remove the auto merge action](https://github.com/nevware21/chromacon/pull/69)
   - [#68: Update dependabot auto merge action](https://github.com/nevware21/chromacon/pull/68)
   - [#64: Bump puppeteer from 24.31.0 to 24.32.0 in the puppeteer group](https://github.com/nevware21/chromacon/pull/64)
   - [#62: Bump @types/eslint from 8.56.12 to 9.6.1 in the types group](https://github.com/nevware21/chromacon/pull/62)
