@@ -1,0 +1,12 @@
+// ------------------------------
+// NPM Publish group definitions
+// ------------------------------
+{
+    "repoRoot": ".",
+    "default": "chromacon",
+    "groups": {
+        "chromacon": [
+            "./core"
+        ]
+    }
+}
