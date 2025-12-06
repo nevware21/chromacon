@@ -126,6 +126,7 @@ describe("Basic Colors", () => {
                             const nested = bold(color("Hello " + dim("Darkness")));
                             assert.equals(nested, "\x1b[1m" + start + "Hello " + "\x1b[2mDarkness\x1b[1m\x1b[39m\x1b[22m", _format(nested));
                             //\x1b[1m\x1b[30mHello \x1b[2mDarkness\x1b[1m\x1b[39m\x1b[22m
+                            //\x1b[1m\x1b[30mHello Darkness\x1b[22m
 
                             const feEmbedded = _convert(color("Hello " + dim("Darkness")));
                             assert.equals(feEmbedded, _convert(start) + "Hello " + "\x9b2mDarkness\x9b22m\x9b39m", _format(feEmbedded));

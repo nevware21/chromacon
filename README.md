@@ -6,10 +6,23 @@
 [![npm version](https://badge.fury.io/js/%40nevware21%2Fchromacon.svg)](https://badge.fury.io/js/%40nevware21%2Fchromacon)
 [![downloads](https://img.shields.io/npm/dt/%40nevware21/chromacon.svg)](https://www.npmjs.com/package/%40nevware21/chromacon)
 [![downloads](https://img.shields.io/npm/dm/%40nevware21/chromacon.svg)](https://www.npmjs.com/package/%40nevware21/chromacon)
+[![Sponsor](https://img.shields.io/badge/Sponsor-444444?logo=githubsponsors
+)](https://github.com/sponsors/nevware21)
 
 ## Overview
 
 Chromacon is a powerful, TypeScript/JavaScript library for adding colors and text formatting to your console and terminal output. Built with modern development practices, it provides a comprehensive API for creating rich, colorful text output across different environments and color support levels.
+
+## Installation
+
+```bash
+npm install @nevware21/chromacon --save
+```
+
+**Recommended Version Specification:**
+```json
+"@nevware21/chromacon": ">= 0.1.0 < 2.x"
+```
 
 ### Key Features
 
@@ -24,15 +37,10 @@ Chromacon is a powerful, TypeScript/JavaScript library for adding colors and tex
 
 ## Documentation and Details
 
-See the [API Reference](https://nevware21.github.io/chromacon/#api-reference) generated from source code via TypeDoc for a full list and details of all available types, functions, and interfaces with included examples.
+See the [Documentation Home](https://nevware21.github.io/chromacon/) site which includes access to the [API Reference](https://nevware21.github.io/chromacon/#api-reference) generated from source code via TypeDoc for a full list and details of all available types, functions, and interfaces with included examples.
 
 See [Browser Support](#browser-support) for details on the supported browser environments.
 
-## Installation
-
-```bash
-npm install @nevware21/chromacon
-```
 
 ## Quick Start
 
@@ -59,193 +67,87 @@ console.log(`Status: ${green(status)}`);
 
 ## API Overview
 
-See [API Reference](https://nevware21.github.io/chromacon/#api-reference) for full details.
+Chromacon provides a flexible API with two usage patterns and intelligent color restoration.
 
-### Colors
+### Two Usage Patterns
 
-#### Foreground Colors
-```typescript
-// Basic colors (16-color support)
-black, red, green, yellow, blue, magenta, cyan, white, gray, grey
-
-// Bright colors
-brightRed, brightGreen, brightYellow, brightBlue, brightMagenta, brightCyan, brightWhite
-```
-
-#### Background Colors
-```typescript
-// Basic background colors
-bgBlack, bgRed, bgGreen, bgYellow, bgBlue, bgMagenta, bgCyan, bgWhite, bgGray, bgGrey
-
-// Bright background colors  
-bgBrightRed, bgBrightGreen, bgBrightYellow, bgBrightBlue, bgBrightMagenta, bgBrightCyan, bgBrightWhite
-```
-
-### Text Styles
-
-```typescript
-// Font styling
-bold, dim, italic
-
-// Text decoration
-underline, strikethrough, overlined
-
-// Visual effects
-blink, inverse, hidden, framed, encircled
-
-// Utility
-reset  // Reset all formatting
-```
-
-### Utility Functions
-
-```typescript
-// Color support detection
-isColorSupported()       // Basic color support
-isRgb256ColorSupported() // 256-color support  
-isTrueColorSupported()   // True color (RGB) support
-
-// Manual configuration
-setColorLevel(ColorLevel.Basic | ColorLevel.Ansi256 | ColorLevel.Rgb | ColorLevel.None)
-getColorLevel()
-
-// Text processing
-stripAnsi(text)  // Remove ANSI codes from text
-matchAnsi(text)  // Find ANSI codes in text
-```
-
-## Usage Examples
-
-### Two Ways to Use Chromacon
-
-Chromacon provides two flexible usage patterns:
-
-#### 1. Function Usage (Recommended)
+**1. Function Usage (Recommended)**
 
 Functions wrap your text and automatically handle color reset:
 
 ```typescript
-import { red, green, bold, italic } from "@nevware21/chromacon";
+import { red, bold } from "@nevware21/chromacon";
 
-// Function wraps text and auto-resets
 console.log(red("This is red text"));
 console.log(bold("This is bold text"));
-
-// Perfect for simple, single-color text
-console.log(green("Success!"));
 ```
 
-#### 2. String Usage (Advanced)
+**2. String Usage (Advanced)**
 
-Use color values directly as strings for fine-grained control:
+Use color values directly as strings for manual control:
 
 ```typescript
-import { red, green, bold, reset } from "@nevware21/chromacon";
+import { red, reset } from "@nevware21/chromacon";
 
-// Manual color control with raw ANSI codes
 console.log(`${red}This is red text${reset}`);
-console.log(`${bold}This is bold text${reset}`);
-
-// Build complex strings with multiple colors
-console.log(`${red}Error:${reset} ${green}Operation completed${reset}`);
+console.log(red + "This is red text" + reset);
+console.log(red.concat("This is red text").concat(reset))
 ```
 
-#### Smart Color Restoration
+### Smart Color Restoration
 
-When nesting color functions, Chromacon intelligently restores the previous color state:
+When nesting color functions, Chromacon intelligently restores the previous color:
 
 ```typescript
-import { red, blue, green } from "@nevware21/chromacon";
+import { red, blue } from "@nevware21/chromacon";
 
-// Nested colors with automatic restoration (within function context)
-console.log(red("Red " + blue("blue") + " back to red"));
-// Output: "Red blue back to red"
-// The text returns to red after the blue section ends
-
-// Complex nesting
-console.log(red("Error in " + green("file.ts") + " at line 42"));
-// "Error in" and "at line 42" are red, "file.ts" is green
-
-// Mixing both patterns (no restoration in template literals)
-console.log(`${red}Status: ${green("OK")} - continuing...${reset}`);
-// "Status:" is red, "OK" is green, "- continuing..." is plain text (not red)
-// Color restoration only works within function call context, not template literals
-
-// Using function context for restoration
-console.log(red("Status: " + green("OK") + " - continuing..."));
-// "Status:" is red, "OK" is green, "- continuing..." is red (restored!)
-// Color restoration works because the entire string is passed to red()
+// Nested colors with automatic restoration
+console.log(red("Error in " + blue("file.ts") + " at line 42"));
+// Output: "Error in" and "at line 42" are red, "file.ts" is blue
 ```
 
-**Important:** Color restoration automatically tracks and restores the active color when a color function completes, but **only within the string passed to that function**. When using template literals with `${red}` as a string value, the restoration doesn't apply to subsequent text in the template literal since it's outside the function's context.
+**Note:** Color restoration only works within function call context, not in template literals where colors are used as string values.
 
-**Performance Optimization:** The intelligent restoration system also optimizes the output by removing redundant ANSI escape sequences that would be immediately overwritten by subsequent sequences, keeping the output compact and efficient.
+See [API Reference](https://nevware21.github.io/chromacon/#api-reference) for full details.
 
-### Combining Colors and Styles
+### Colors
 
-```typescript
-import { red, blue, bold, underline, bgYellow, black, reset } from "@nevware21/chromacon";
 
-// Function usage - nested formatting with auto-reset
-console.log(red(`Error in ${blue(bold("file.ts"))} at ${underline("line 42")}`));
-// "Error in" and "at" are red, "file.ts" is blue and bold, "line 42" is underlined
+| Type | Colors |
+|------|--------|
+| Foreground Colors | <code>[black](https://nevware21.github.io/chromacon/typedoc/core/variables/black.html); [red](https://nevware21.github.io/chromacon/typedoc/core/variables/red.html); [green](https://nevware21.github.io/chromacon/typedoc/core/variables/green.html); [yellow](https://nevware21.github.io/chromacon/typedoc/core/variables/yellow.html); [blue](https://nevware21.github.io/chromacon/typedoc/core/variables/blue.html); [magenta](https://nevware21.github.io/chromacon/typedoc/core/variables/magenta.html); [cyan](https://nevware21.github.io/chromacon/typedoc/core/variables/cyan.html); [white](https://nevware21.github.io/chromacon/typedoc/core/variables/white.html); [gray](https://nevware21.github.io/chromacon/typedoc/core/variables/gray.html); [grey](https://nevware21.github.io/chromacon/typedoc/core/variables/grey.html)</code> |
+| Bright Foreground Colors | <code>[brightRed](https://nevware21.github.io/chromacon/typedoc/core/variables/brightRed.html); [brightGreen](https://nevware21.github.io/chromacon/typedoc/core/variables/brightGreen.html); [brightYellow](https://nevware21.github.io/chromacon/typedoc/core/variables/brightYellow.html); [brightBlue](https://nevware21.github.io/chromacon/typedoc/core/variables/brightBlue.html); [brightMagenta](https://nevware21.github.io/chromacon/typedoc/core/variables/brightMagenta.html); [brightCyan](https://nevware21.github.io/chromacon/typedoc/core/variables/brightCyan.html); [brightWhite](https://nevware21.github.io/chromacon/typedoc/core/variables/brightWhite.html)</code> |
+| Background Colors | <code>[bgBlack](https://nevware21.github.io/chromacon/typedoc/core/variables/bgBlack.html); [bgRed](https://nevware21.github.io/chromacon/typedoc/core/variables/bgRed.html); [bgGreen](https://nevware21.github.io/chromacon/typedoc/core/variables/bgGreen.html); [bgYellow](https://nevware21.github.io/chromacon/typedoc/core/variables/bgYellow.html); [bgBlue](https://nevware21.github.io/chromacon/typedoc/core/variables/bgBlue.html); [bgMagenta](https://nevware21.github.io/chromacon/typedoc/core/variables/bgMagenta.html); [bgCyan](https://nevware21.github.io/chromacon/typedoc/core/variables/bgCyan.html); [bgWhite](https://nevware21.github.io/chromacon/typedoc/core/variables/bgWhite.html); [bgGray](https://nevware21.github.io/chromacon/typedoc/core/variables/bgGray.html); [bgGrey](https://nevware21.github.io/chromacon/typedoc/core/variables/bgGrey.html)</code> |
+| Bright Background Colors | <code>[bgBrightRed](https://nevware21.github.io/chromacon/typedoc/core/variables/bgBrightRed.html); [bgBrightGreen](https://nevware21.github.io/chromacon/typedoc/core/variables/bgBrightGreen.html); [bgBrightYellow](https://nevware21.github.io/chromacon/typedoc/core/variables/bgBrightYellow.html); [bgBrightBlue](https://nevware21.github.io/chromacon/typedoc/core/variables/bgBrightBlue.html); [bgBrightMagenta](https://nevware21.github.io/chromacon/typedoc/core/variables/bgBrightMagenta.html); [bgBrightCyan](https://nevware21.github.io/chromacon/typedoc/core/variables/bgBrightCyan.html); [bgBrightWhite](https://nevware21.github.io/chromacon/typedoc/core/variables/bgBrightWhite.html)</code> |
 
-// Complex combinations
-console.log(bgYellow(black(bold("WARNING: Critical Issue"))));
+### Text Styles
 
-// String usage - manual control for complex scenarios
-console.log(`${red}Error: ${bold}Critical${reset}${red} failure in system${reset}`);
 
-// Mix both patterns for flexibility
-const filename = blue(bold("config.json"));
-console.log(`${red}Cannot find ${filename} in directory${reset}`);
-// "Cannot find" and "in directory" are red, "config.json" is blue and bold
-```
+| Type | Styles |
+|------|--------|
+| Font Styling | <code>[bold](https://nevware21.github.io/chromacon/typedoc/core/variables/bold.html); [dim](https://nevware21.github.io/chromacon/typedoc/core/variables/dim.html); [italic](https://nevware21.github.io/chromacon/typedoc/core/variables/italic.html)</code> |
+| Text Decoration | <code>[underline](https://nevware21.github.io/chromacon/typedoc/core/variables/underline.html); [strikethrough](https://nevware21.github.io/chromacon/typedoc/core/variables/strikethrough.html); [overlined](https://nevware21.github.io/chromacon/typedoc/core/variables/overlined.html)</code> |
+| Visual Effects | <code>[blink](https://nevware21.github.io/chromacon/typedoc/core/variables/blink.html); [inverse](https://nevware21.github.io/chromacon/typedoc/core/variables/inverse.html); [hidden](https://nevware21.github.io/chromacon/typedoc/core/variables/hidden.html); [framed](https://nevware21.github.io/chromacon/typedoc/core/variables/framed.html); [encircled](https://nevware21.github.io/chromacon/typedoc/core/variables/encircled.html)</code> |
+| Utility | <code>[reset](https://nevware21.github.io/chromacon/typedoc/core/variables/reset.html)</code> |
 
-### Conditional Formatting
+### Utility Functions
 
-```typescript
-import { isColorSupported, red, green } from "@nevware21/chromacon";
+| Type | Functions |
+|------|-----------|
+| Color Support Detection | <code>[isColorSupported](https://nevware21.github.io/chromacon/typedoc/core/functions/isColorSupported.html)(); [isRgb256ColorSupported](https://nevware21.github.io/chromacon/typedoc/core/functions/isRgb256ColorSupported.html)(); [isTrueColorSupported](https://nevware21.github.io/chromacon/typedoc/core/functions/isTrueColorSupported.html)()</code> |
+| Manual Configuration | <code>[setColorLevel](https://nevware21.github.io/chromacon/typedoc/core/functions/setColorLevel.html)(); [getColorLevel](https://nevware21.github.io/chromacon/typedoc/core/functions/getColorLevel.html)(); [setColorDetector](https://nevware21.github.io/chromacon/typedoc/core/functions/setColorDetector.html)()</code> |
+| Text Processing | <code>[stripAnsi](https://nevware21.github.io/chromacon/typedoc/core/functions/stripAnsi.html)(); [matchAnsi](https://nevware21.github.io/chromacon/typedoc/core/functions/matchAnsi.html)()</code> |
 
-function logStatus(message: string, isSuccess: boolean) {
-    if (isColorSupported()) {
-        const color = isSuccess ? green : red;
-        console.log(color(message));
-    } else {
-        console.log(`[${isSuccess ? 'OK' : 'ERROR'}] ${message}`);
-    }
-}
-```
+## Usage Examples
 
-### Color Level Configuration
+See [Usage Examples](docs/UsageExamples.md) for comprehensive examples including:
 
-```typescript
-import { setColorLevel, ColorLevel, red } from "@nevware21/chromacon";
-
-// Force specific color levels
-setColorLevel(ColorLevel.None);     // Disable all colors
-setColorLevel(ColorLevel.Basic);    // 16 colors only
-setColorLevel(ColorLevel.Ansi256);  // 256 colors
-setColorLevel(ColorLevel.Rgb);      // True color (16.7M colors)
-
-// Auto-detect (default)
-setColorLevel(ColorLevel.AutoDetect);
-```
-
-### Text Processing
-
-```typescript
-import { stripAnsi, matchAnsi, red, bold } from "@nevware21/chromacon";
-
-const coloredText = red(bold("Hello World"));
-console.log(coloredText);        // "\x1b[31m\x1b[1mHello World\x1b[22m\x1b[39m"
-
-const plainText = stripAnsi(coloredText);
-console.log(plainText);          // "Hello World"
-
-const ansiCodes = matchAnsi(coloredText);
-console.log(ansiCodes);          // ["\x1b[31m", "\x1b[1m", "\x1b[22m", "\x1b[39m"]
-```
+- Function usage vs string usage patterns
+- Smart color restoration
+- Combining colors and styles
+- Conditional formatting
+- Color level configuration
+- Text processing utilities
 
 ## Color Support Levels
 
@@ -414,19 +316,27 @@ setColorDetector(() => {
 
 ### Fallback Behavior
 
-When ANSI support is not available, Chromacon gracefully degrades:
+When ANSI support is not available, Chromacon automatically returns plain text without color codes. You can also add custom fallback behavior for better user experience:
 
 ```typescript
-import { isColorSupported, red, bold } from "@nevware21/chromacon";
+import { isColorSupported, red, green, bold } from "@nevware21/chromacon";
 
 function formatMessage(text: string, level: 'error' | 'success') {
-    if (isColorSupported()) {
-        return level === 'error' ? red(bold(text)) : green(bold(text));
-    } else {
-        // Fallback for unsupported environments
-        return `[${level.toUpperCase()}] ${text}`;
+    const formattedText = level === 'error' ? red(bold(text)) : green(bold(text));
+    
+    if (!isColorSupported()) {
+        // Colors not supported - so add additional text indicators as fallback
+        formattedText = `[${level.toUpperCase()}] ${formattedText}`;
     }
+
+    // return formatted text
+    return formattedText;
 }
+
+// Example usage:
+console.log(formatMessage("Operation failed", "error"));
+// With colors: displays red bold text
+// Without colors: displays "[ERROR] Operation failed"
 ```
 
 ### Browser Console Examples

@@ -51,6 +51,7 @@ npm install @nevware21/chromacon
 ## Resources
 
 - **[Complete Documentation & Examples](https://github.com/nevware21/chromacon/blob/main/README.md)** - Full README with comprehensive examples and API reference
+- **[Usage Examples](UsageExamples.md)** - Detailed usage patterns and examples
 - **[TypeDoc API Reference](https://nevware21.github.io/chromacon/#api-reference)** - Generated API documentation with detailed type information
 - **[NPM Package](https://www.npmjs.com/package/@nevware21/chromacon)** - Install and package information
 - **[GitHub Repository](https://github.com/nevware21/chromacon)** - Source code, issues, and contributions
@@ -58,7 +59,7 @@ npm install @nevware21/chromacon
 ## Quick Links
 
 - [Installation Guide](https://github.com/nevware21/chromacon/blob/main/README.md#installation)
-- [Usage Examples](https://github.com/nevware21/chromacon/blob/main/README.md#usage-examples)
+- [Usage Examples](UsageExamples.md)
 - [Browser Support](https://github.com/nevware21/chromacon/blob/main/README.md#browser-support)
 - [TypeScript Support](https://github.com/nevware21/chromacon/blob/main/README.md#typescript-support)
 - [Contributing Guide](https://github.com/nevware21/chromacon/blob/main/CONTRIBUTING.md)

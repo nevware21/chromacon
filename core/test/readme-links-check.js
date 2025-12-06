@@ -38,6 +38,14 @@ function _hasLink(allDocLinks, url) {
     return false;
 }
 
+function missingText(text) {
+    return `\x1b[7m\x1b[92m${text}\x1b[0m\x1b[27m`;
+}
+
+function matchText(text) {
+    return `\x1b[90m${text}\x1b[0m`;
+}
+
 function _findClosestLink(allDocLinks, url) {
     let closest = null;
     let maxLength = 0;
@@ -50,9 +58,20 @@ function _findClosestLink(allDocLinks, url) {
             while (prefixLen < minLen && link[prefixLen] === url[prefixLen]) {
                 prefixLen++;
             }
+
+            // Check for any end of string matches, to detect failures on path differences
+            let prefixMatchPos = prefixLen;
+            let linkPos = link.length;
+            let urlPos = url.length;
+            while (linkPos > 0 && urlPos > 0 && linkPos > prefixMatchPos && urlPos > prefixMatchPos && link[linkPos-1] === url[urlPos-1]) {
+                prefixLen++;
+                linkPos--;
+                urlPos--;
+            }
+
             if (prefixLen > maxLength) {
                 maxLength = prefixLen;
-                closest = link;
+                closest = matchText(link.substring(0, prefixMatchPos)) + missingText(link.substring(prefixMatchPos, linkPos)) + matchText(link.substring(linkPos));
             }
         });
     });
@@ -90,7 +109,7 @@ function _checkLinks(allDocLinks, docLinks, resolvePathFn, desc) {
             console.log(`    Expected....: ${localPath}`);
             let closest = _findClosestLink(allDocLinks, url);
             if (closest) {
-                console.log(`    Did you mean: ${closest}?`);
+                console.log(`    Did you mean: ${closest}`);
             }
         });
     }
