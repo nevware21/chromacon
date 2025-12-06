@@ -32,7 +32,10 @@ module.exports = function (config) {
                 sourceMap: true
             },
             bundlerOptions: {
-                sourceMap: true
+                sourceMap: true,
+                resolve: {
+                    extensions: [".ts", ".js"]
+                }
             },
             coverageOptions: {
                 instrumentation: true,
