@@ -69,7 +69,7 @@
         "npm-pack": "copyfiles README.md LICENSE core && cd core && npm pack",
         "npm-publish": "publish-npm -c ./publish-groups.json",
         "pre-proc": "ts-preproc -C ./pre-proc.json",
-        "preproc-restore": "ts-preproc-restore -c ./preproc.json",
+        "preproc-restore": "ts-preproc-restore -c ./pre-proc.json",
         "size": "size-limit",
         "size-check": "node core/test/bundle-size-check.js",
         "link-check": "node core/test/readme-links-check.js",
