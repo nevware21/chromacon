@@ -1,4 +1,4 @@
-# Un-Released Changes
+# v0.1.0, Dec 6th 2025
 
 ## Initial Release
 
@@ -32,6 +32,8 @@ This is the first release of **@nevware21/chromacon** - a powerful, TypeScript/J
 #### Developer Experience
 - **Full TypeScript Support**: Comprehensive type definitions and IntelliSense support
 - **Flexible API**: Both functional (`red("text")`) and string-based (`${red}text${reset}`) usage patterns
+- **Smart Color Restoration**: Automatic color context restoration when nesting color functions
+- **Output Optimization**: Intelligent removal of redundant ANSI escape sequences for cleaner output
 - **Tree-Shakable Exports**: Import only what you need for optimal bundle size
 - **Minimal Dependencies**: Lightweight with only essential utilities (@nevware21/ts-utils)
 
@@ -45,6 +47,16 @@ This is the first release of **@nevware21/chromacon** - a powerful, TypeScript/J
 ### Links
 
 - **Pull Requests & Issues**:
+  - [#82: Update ansi formatter to reduce duplicates and unnecessary escape codes](https://github.com/nevware21/chromacon/pull/82)
+  - [#76: Bump lewagon/wait-on-check-action from 1.3.4 to 1.4.1](https://github.com/nevware21/chromacon/pull/76)
+  - [#75: Address karme-typescript browser failures](https://github.com/nevware21/chromacon/pull/75)
+  - [#74: Update api-reference links](https://github.com/nevware21/chromacon/pull/74)
+  - [#73: Add Dependabot auto approval action](https://github.com/nevware21/chromacon/pull/73)
+  - [#72: Update Pure annotations](https://github.com/nevware21/chromacon/pull/72)
+  - [#69: Remove the auto merge action](https://github.com/nevware21/chromacon/pull/69)
+  - [#68: Update dependabot auto merge action](https://github.com/nevware21/chromacon/pull/68)
+  - [#64: Bump puppeteer from 24.31.0 to 24.32.0 in the puppeteer group](https://github.com/nevware21/chromacon/pull/64)
+  - [#62: Bump @types/eslint from 8.56.12 to 9.6.1 in the types group](https://github.com/nevware21/chromacon/pull/62)
   - [#60: Update Readme and add examples to better call out color restoration and direct usage](https://github.com/nevware21/chromacon/pull/60)
   - [#57: Bump the rollup group in /core with 3 updates](https://github.com/nevware21/chromacon/pull/57)
   - [#49: Update dependencies](https://github.com/nevware21/chromacon/pull/49)
@@ -52,15 +64,6 @@ This is the first release of **@nevware21/chromacon** - a powerful, TypeScript/J
   - [#45: Bump actions/checkout from 4 to 6](https://github.com/nevware21/chromacon/pull/45)
   - [#44: Auto sync rush.json dependabot changes](https://github.com/nevware21/chromacon/pull/44)
   - [#2: Initial Support for stripAnsi and color support detection](https://github.com/nevware21/chromacon/pull/2)
-
-- **Commits**:
-  - [`042721c`](https://github.com/nevware21/chromacon/commit/042721caa465d3e35df43b73278f8059862d0c7b): Update Readme and add examples to better call out color restoration and direct usage (#60)
-  - [`f482c7a`](https://github.com/nevware21/chromacon/commit/f482c7a16e3dcc0880a74b316b6ae0909556b8a4): Bump the rollup group in /core with 3 updates (#57)
-  - [`b6f45a8`](https://github.com/nevware21/chromacon/commit/b6f45a8e7474a8c227d57bf9c597419bdf19d2c9): Update dependencies (#49)
-  - [`6d9f9ed`](https://github.com/nevware21/chromacon/commit/6d9f9ed1250e41a9edb2787b8447984723e4eb10): Bump actions/setup-node from 4 to 6 (#46)
-  - [`4c595fc`](https://github.com/nevware21/chromacon/commit/4c595fc78c70a1b1a702890fd821b1652d24df0f): Bump actions/checkout from 4 to 6 (#45)
-  - [`ea63fff`](https://github.com/nevware21/chromacon/commit/ea63fffa33c7882aaef7037d99a4fb7b425e6ec7): Auto sync rush.json dependabot changes (#44)
-  - [`0d585de`](https://github.com/nevware21/chromacon/commit/0d585de99d6cd2c3872f8c297f7ad3d8e0484eb4): Initial Support for stripAnsi and color support detection (#2)
 
 ### Documentation
 
