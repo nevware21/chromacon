@@ -16,7 +16,7 @@ concurrency:
 jobs:
   auto-approve:
     runs-on: ubuntu-latest
-    if: github.actor == 'dependabot[bot]'
+    if: github.actor == 'dependabot[bot]' || github.actor == 'nev21'
     steps:
       - name: Dependabot metadata
         id: metadata
