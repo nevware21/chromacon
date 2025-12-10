@@ -51,7 +51,16 @@ function _convert(value: string) {
 describe("Text Styles", () => {
 
     describe("basic style tests", () => {
-        
+        describe("Simple styles", () => {
+            it("Reset style", () => {
+                assert.equals(reset("Hello"), "\x1b[0mHello\x1b[0m", _format(reset("Hello")));
+            });
+
+            it("Bold style", () => {
+                assert.equals(bold("Hello"), "\x1b[1mHello\x1b[22m", _format(bold("Hello")));
+            });
+        });
+
         for (let level = ColorLevel.None as number; level <= (ColorLevel.Rgb as number); level++) {
             describe("With ColorLevel:" + colorNames[level], () => {
 

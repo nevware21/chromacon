@@ -7,7 +7,7 @@
  */
 
 import { DEFAULT_RESET } from "./consts";
-import { CsiStyle } from "../interfaces/types";
+import { ChromaStyle } from "../interfaces/types";
 import { IColorDef } from "../interfaces/IColorDef";
 import { _createCsiColor } from "./createColor";
 
@@ -18,6 +18,6 @@ import { _createCsiColor } from "./createColor";
  * @returns The CSI color code
  */
 /*#__NO_SIDE_EFFECTS__*/
-export function _createStyle(style: IColorDef, reset: IColorDef = DEFAULT_RESET): CsiStyle {
+export function _createStyle(style: IColorDef, reset: IColorDef = DEFAULT_RESET): ChromaStyle {
     return _createCsiColor(style, reset);
 }
