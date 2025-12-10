@@ -127,7 +127,7 @@ See [API Reference](https://nevware21.github.io/chromacon/#api-reference) for fu
 
 | Type | Styles |
 |------|--------|
-| Font Styling | <code>[bold](https://nevware21.github.io/chromacon/typedoc/core/variables/bold.html); [dim](https://nevware21.github.io/chromacon/typedoc/core/variables/dim.html); [italic](https://nevware21.github.io/chromacon/typedoc/core/variables/italic.html)</code> |
+| Font Styling | <code>[bold](https://nevware21.github.io/chromacon/typedoc/core/variables/bold.html); [dim](https://nevware21.github.io/chromacon/typedoc/core/variables/dim.html); [italic](https://nevware21.github.io/chromacon/typedoc/core/variables/italic.html); [normal](https://nevware21.github.io/chromacon/typedoc/core/variables/normal.html)</code> |
 | Text Decoration | <code>[underline](https://nevware21.github.io/chromacon/typedoc/core/variables/underline.html); [strikethrough](https://nevware21.github.io/chromacon/typedoc/core/variables/strikethrough.html); [overlined](https://nevware21.github.io/chromacon/typedoc/core/variables/overlined.html)</code> |
 | Visual Effects | <code>[blink](https://nevware21.github.io/chromacon/typedoc/core/variables/blink.html); [inverse](https://nevware21.github.io/chromacon/typedoc/core/variables/inverse.html); [hidden](https://nevware21.github.io/chromacon/typedoc/core/variables/hidden.html); [framed](https://nevware21.github.io/chromacon/typedoc/core/variables/framed.html); [encircled](https://nevware21.github.io/chromacon/typedoc/core/variables/encircled.html)</code> |
 | Utility | <code>[reset](https://nevware21.github.io/chromacon/typedoc/core/variables/reset.html)</code> |
