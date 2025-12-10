@@ -1,3 +1,23 @@
+# v0.1.1, Dec 9th 2025
+
+## Documentation Improvements
+
+### Updates
+
+- **Updated Style Exports**: Styles are now exported as `ChromaStyle` types and not just `CsiStyle` for better TypeScript support
+- **Enhanced Examples**: Updated all color and style examples to show all three usage patterns:
+  - Function call syntax: `color("text")` - includes automatic reset
+  - Template literal syntax: `` `${color}text` `` - no reset included  
+  - String concatenation: `color + "text"` - no reset included
+  - Concat method: `color.concat("text")` - no reset included
+  - *Each example now clearly indicates whether reset codes are included or not
+
+### Links
+
+- **Full Changelog**: https://github.com/nevware21/chromacon/compare/v0.1.0...v0.1.1
+
+---
+
 # v0.1.0, Dec 6th 2025
 
 ## Initial Release
