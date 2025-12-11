@@ -131,7 +131,7 @@ describe("Text Styles", () => {
                                 assert.equals(nested, "\x1b[1m" + start + "Hello " + "\x1b[2mWorld" + end + "\x1b[22m", _format(nested));
                             } else if (style === normal) {
                                 // Special case: Automatic restore of normal intensity is problematic here as normal ends with \x1b[22m which also ends bold
-                                // bold(normal(dim())) - as normal ends with \x1b[22m which also ends bold, the expliciting setting of normal is ignored for ANSI operations
+                                // bold(normal(dim())) - as normal ends with \x1b[22m which also ends bold, the explicit setting of normal is ignored for ANSI operations
                                 assert.equals(nested, "\x1b[1mHello " + "\x1b[2mWorld\x1b[22m", _format(nested));
                             } else {
                                 // bold(style(dim())) - bold, style, dim, restore bold, end style, end bold
