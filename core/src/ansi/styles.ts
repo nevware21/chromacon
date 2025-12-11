@@ -26,6 +26,22 @@ import { _createStyle } from "../utils/createStyle";
 export const reset: ChromaStyle = (/*#__PURE__*/_createStyle({ s: CSIColors.Reset }));
 
 /**
+ * Normal intensity (neither bold nor faint), this is the default intensity. And also resets bold and dim styles,
+ * which is why automatic reset behavior ignores any embedded normal intensity.
+ * It is not recommended to use this style directly but rather rely on the automatic reset behavior of other styles.
+ * @group Styles
+ * @example
+ * ```ts
+ * // ANSI Theme
+ * normal("text")        // => "\x1b[22mtext\x1b[22m" (includes reset to normal intensity)
+ * `${normal}text`       // => "\x1b[22mtext" (no reset included)
+ * normal + "text"       // => "\x1b[22mtext" (no reset included)
+ * normal.concat("text") // => "\x1b[22mtext" (no reset included)
+ * ```
+ */
+export const normal: ChromaStyle = (/*#__PURE__*/_createStyle({ s: CSIColors.NormalIntensity }, { s: CSIColors.NormalIntensity }));
+
+/**
  * Bold color or style
  * @group Styles
  * @example

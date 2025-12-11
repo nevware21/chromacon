@@ -36,6 +36,6 @@ export {
     reset,
     
     // Styles
-    bold, dim, italic, underline, blink, inverse, hidden, strikethrough,
+    bold, dim, normal, italic, underline, blink, inverse, hidden, strikethrough,
     disableProportionalSpacing, framed, encircled, overlined, notFramed, notOverlined
 } from "./ansi/styles";

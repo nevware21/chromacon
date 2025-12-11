@@ -8,7 +8,7 @@
 
 import { assert } from "@nevware21/tripwire";
 import {
-    bold, dim, italic, underline, blink, inverse, hidden, strikethrough,
+    bold, dim, normal, italic, underline, blink, inverse, hidden, strikethrough,
     framed, encircled, overlined, reset
 } from "../../../src/ansi/styles";
 import { red, green, blue } from "../../../src/ansi/colors";
@@ -27,6 +27,7 @@ const colorNames: { [key: number]: string } = {
 const styles: { [key: string]: { style: CsiStyle, start: string, end: string } } = {
     "bold": { style: bold, start: "\x1b[1m", end: "\x1b[22m" },
     "dim": { style: dim, start: "\x1b[2m", end: "\x1b[22m" },
+    "normal": { style: normal, start: "\x1b[22m", end: "\x1b[22m" },
     "italic": { style: italic, start: "\x1b[3m", end: "\x1b[23m" },
     "underline": { style: underline, start: "\x1b[4m", end: "\x1b[24m" },
     "blink": { style: blink, start: "\x1b[5m", end: "\x1b[25m" },
@@ -92,18 +93,29 @@ describe("Text Styles", () => {
 
                             // Check implicit conversions
                             assert.equals("" + style, start);
-                            assert.notEquals("" + style, end);
+                            if (start !== end) {
+                                // Special case for normal which has same start and end
+                                assert.notEquals("" + style, end, _format("" + style));
+                            }
                             assert.notEquals("" + style, "");
 
                             // Check explicit conversions
                             assert.equals(style.toString(), start);
-                            assert.notEquals(style.toString(), end);
+                            if (start !== end) {
+                                // Special case for normal which has same start and end
+                                assert.notEquals(style.toString(), end);
+                            }
                             assert.notEquals(style.toString(), "");
 
                             // Check asString conversions (should be same as toString)
                             assert.equals(asString(style), start);
-                            assert.notEquals(asString(style), end);
-                            assert.notEquals(asString(style), "");
+                            if (start === end) {
+                                // Special case for normal which has same start and end
+                                assert.equals(asString(style), end, _format(asString(style)));
+                            } else {
+                                assert.notEquals(asString(style), "");
+                                assert.notEquals(asString(style), end);
+                            }
                         });
 
                         it ("should handle nested styles with " + styleName, () => {
@@ -117,6 +129,10 @@ describe("Text Styles", () => {
                             } else if (style === encircled) {
                                 // bold(encircled(dim())) - encircled ends with \x1b[0m (full reset), so \x1b[1m restore removed since immediately followed by \x1b[22m
                                 assert.equals(nested, "\x1b[1m" + start + "Hello " + "\x1b[2mWorld" + end + "\x1b[22m", _format(nested));
+                            } else if (style === normal) {
+                                // Special case: Automatic restore of normal intensity is problematic here as normal ends with \x1b[22m which also ends bold
+                                // bold(normal(dim())) - as normal ends with \x1b[22m which also ends bold, the explicit setting of normal is ignored for ANSI operations
+                                assert.equals(nested, "\x1b[1mHello " + "\x1b[2mWorld\x1b[22m", _format(nested));
                             } else {
                                 // bold(style(dim())) - bold, style, dim, restore bold, end style, end bold
                                 assert.equals(nested, "\x1b[1m" + start + "Hello " + "\x1b[2mWorld\x1b[1m" + end + "\x1b[22m", _format(nested));
@@ -144,6 +160,10 @@ describe("Text Styles", () => {
                             } else if (style === encircled) {
                                 // encircled(bold(red())) - encircled ends with \x1b[0m (full reset) so \x1b[39m and \x1b[22m removed by optimizer
                                 assert.equals(nested, start + "Hello " + "\x1b[1mWorld " + "\x1b[31m!" + end, _format(nested));
+                            } else if (style === normal) {
+                                // Special case: Automatic restore of normal intensity is problematic here as normal ends with \x1b[22m which also ends bold
+                                // normal(bold(red())) - as normal ends with \x1b[22m which also ends bold, the expliciting setting of normal is ignored for ANSI operations
+                                assert.equals(nested, start + "Hello " + "\x1b[1mWorld " + "\x1b[31m!\x1b[39m" + end, _format(nested));
                             } else {
                                 // style(bold(red())) - style starts, bold starts, red for !, red ends, bold ends, style ends
                                 assert.equals(nested, start + "Hello " + "\x1b[1mWorld " + "\x1b[31m!\x1b[39m\x1b[22m" + end, _format(nested));
