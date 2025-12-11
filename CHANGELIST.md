@@ -1,3 +1,22 @@
+# v0.1.2, Dec 10th 2025
+
+## New Features
+
+### Enhancements
+
+- **Added `normal` Style**: New text style that sets normal intensity, providing an explicit way to reset bold/dim effects while preserving other formatting
+  - Useful for fine-grained control over text intensity within formatted output
+  - Complements existing `bold` and `dim` styles
+  - See [normal style API](https://nevware21.github.io/chromacon/typedoc/core/variables/normal.html) for details
+
+### Links
+
+- **Pull Requests & Issues**:
+  - [#98: Add normal style (sets the normal intensity)](https://github.com/nevware21/chromacon/pull/98)
+- **Full Changelog**: https://github.com/nevware21/chromacon/compare/v0.1.1...v0.1.2
+
+---
+
 # v0.1.1, Dec 9th 2025
 
 ## Documentation Improvements

@@ -21,7 +21,7 @@ npm install @nevware21/chromacon --save
 
 **Recommended Version Specification:**
 ```json
-"@nevware21/chromacon": ">= 0.1.1 < 2.x"
+"@nevware21/chromacon": ">= 0.1.2 < 2.x"
 ```
 
 ### Key Features
