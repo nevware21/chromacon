@@ -23,8 +23,10 @@ jobs:
           # Look for @microsoft/rush in the diff
           if git diff -U0 HEAD~1 -- **/package.json | grep '"@microsoft/rush"'; then
             echo "rush_changed=true" >> $GITHUB_OUTPUT
+            echo "Rush change detected"
           else
             echo "rush_changed=false" >> $GITHUB_OUTPUT
+            echo "No Rush change detected"
           fi
 
   update:
