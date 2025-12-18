@@ -15,7 +15,8 @@ jobs:
       rush_changed: ${{ steps.detect.outputs.rush_changed }}
     steps:
       - uses: actions/checkout@v6
-
+        with:
+          fetch-depth: 2  # Fetch current commit + previous commit
       - name: Detect Rush bump
         id: detect
         run: |
