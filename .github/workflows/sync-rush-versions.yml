@@ -38,6 +38,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
+          ref: ${{ github.head_ref }}
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -65,14 +66,13 @@ jobs:
         run: |
           git config --global user.name "dependabot-sync[bot]"
           git config --global user.email "dependabot-sync[bot]@users.noreply.github.com"
-          git add rush.json || true
-          git add common-versions.json || true
-          git add pnpm-lock.yaml || true
-          git add yarn.lock || true
-          git add package-lock.json || true
+          # Add files that exist
+          if [ -f rush.json ]; then git add rush.json; fi
+          if [ -f common-versions.json ]; then git add common-versions.json; fi
+          if [ -f common/config/rush/npm-shrinkwrap.json ]; then git add common/config/rush/npm-shrinkwrap.json; fi
           if git diff --staged --quiet; then
             echo "No changes to commit."
           else
             git commit -m "chore: sync rush.json and regenerate lockfiles"
-            git push --force-with-lease
+            git push
           fi
