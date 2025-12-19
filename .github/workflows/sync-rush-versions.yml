@@ -21,7 +21,7 @@ jobs:
         id: detect
         run: |
           # Look for @microsoft/rush in the diff
-          if git diff -U0 HEAD~1 -- **/package.json | grep '"@microsoft/rush"'; then
+          if git diff -U0 HEAD~1 -- package.json | grep '"@microsoft/rush"'; then
             echo "rush_changed=true" >> $GITHUB_OUTPUT
             echo "Rush change detected"
           else
