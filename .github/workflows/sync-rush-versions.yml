@@ -38,6 +38,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
+          ref: ${{ github.head_ref }}
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -74,5 +75,5 @@ jobs:
             echo "No changes to commit."
           else
             git commit -m "chore: sync rush.json and regenerate lockfiles"
-            git push --force-with-lease
+            git push
           fi
