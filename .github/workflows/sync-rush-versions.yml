@@ -70,9 +70,6 @@ jobs:
           if [ -f rush.json ]; then git add rush.json; fi
           if [ -f common-versions.json ]; then git add common-versions.json; fi
           if [ -f common/config/rush/npm-shrinkwrap.json ]; then git add common/config/rush/npm-shrinkwrap.json; fi
-          if [ -f pnpm-lock.yaml ]; then git add pnpm-lock.yaml; fi
-          if [ -f yarn.lock ]; then git add yarn.lock; fi
-          if [ -f package-lock.json ]; then git add package-lock.json; fi
           if git diff --staged --quiet; then
             echo "No changes to commit."
           else
