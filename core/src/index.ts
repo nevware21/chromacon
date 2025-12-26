@@ -13,7 +13,10 @@ export {
     CsiColor, ChromaColor
 } from "./interfaces/types";
 
-export { stripAnsi, matchAnsi } from "./ansi/stripAnsi";
+export { stripAnsi, replaceAnsi, ReplacerFn } from "./ansi/stripAnsi";
+export { matchAnsi } from "./ansi/matchAnsi";
+export { parseAnsi } from "./ansi/parseAnsi";
+export { escapeAnsi } from "./ansi/escapeAnsi";
 
 export {
     setColorDetector, setColorLevel, getColorLevel,

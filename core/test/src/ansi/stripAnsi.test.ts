@@ -118,7 +118,7 @@ describe("stripAnsi", () => {
 
     it("should handle strings with ANSI escape codes and emoji", () => {
         const input = "\u001b[31mHello👋Darkness\u001b[0m";
-        const expectedOutput = "Hello👋Darkness"
+        const expectedOutput = "Hello👋Darkness";
         expect(stripAnsi(input)).equal(expectedOutput);
     });
 

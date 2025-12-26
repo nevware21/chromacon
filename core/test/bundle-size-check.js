@@ -7,13 +7,13 @@ const configs = [
   {
     name: "es5-min-full",
     path: "../bundle/es5/umd/chromacon.min.js",
-    limit: 10 * 1024, // 10 kb in bytes
+    limit: 11 * 1024, // ~11 kb in bytes
     compress: false
   },
   {
     name: "es6-min-full",
     path: "../bundle/es6/umd/chromacon.min.js",
-    limit: 10 * 1024, // 10 kb in bytes
+    limit: 10.5 * 1024, // ~10.5 kb in bytes
     compress: false
   },
   {

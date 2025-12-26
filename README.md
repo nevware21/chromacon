@@ -138,7 +138,7 @@ See [API Reference](https://nevware21.github.io/chromacon/#api-reference) for fu
 |------|-----------|
 | Color Support Detection | <code>[isColorSupported](https://nevware21.github.io/chromacon/typedoc/core/functions/isColorSupported.html)(); [isRgb256ColorSupported](https://nevware21.github.io/chromacon/typedoc/core/functions/isRgb256ColorSupported.html)(); [isTrueColorSupported](https://nevware21.github.io/chromacon/typedoc/core/functions/isTrueColorSupported.html)()</code> |
 | Manual Configuration | <code>[setColorLevel](https://nevware21.github.io/chromacon/typedoc/core/functions/setColorLevel.html)(); [getColorLevel](https://nevware21.github.io/chromacon/typedoc/core/functions/getColorLevel.html)(); [setColorDetector](https://nevware21.github.io/chromacon/typedoc/core/functions/setColorDetector.html)()</code> |
-| Text Processing | <code>[stripAnsi](https://nevware21.github.io/chromacon/typedoc/core/functions/stripAnsi.html)(); [matchAnsi](https://nevware21.github.io/chromacon/typedoc/core/functions/matchAnsi.html)()</code> |
+| Text Processing | <code>[stripAnsi](https://nevware21.github.io/chromacon/typedoc/core/functions/stripAnsi.html)(); [matchAnsi](https://nevware21.github.io/chromacon/typedoc/core/functions/matchAnsi.html)(); [parseAnsi](https://nevware21.github.io/chromacon/typedoc/core/functions/parseAnsi.html)(); [replaceAnsi](https://nevware21.github.io/chromacon/typedoc/core/functions/replaceAnsi.html)(); [escapeAnsi](https://nevware21.github.io/chromacon/typedoc/core/functions/escapeAnsi.html)()</code> |
 
 ## Usage Examples
 

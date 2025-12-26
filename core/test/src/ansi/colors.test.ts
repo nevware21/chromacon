@@ -23,7 +23,7 @@ const colorNames: { [key: number]: string } = {
     [ColorLevel.Basic]: "Basic",
     [ColorLevel.Ansi256]: "Rgb256",
     [ColorLevel.Rgb]: "TrueColor"
-}
+};
 
 const foregroundColors: { [key: string]: { color: ChromaColor, start: string, end: string } } = {
     "black": { color: black, start: "\x1b[30m", end: "\x1b[39m" },
@@ -42,7 +42,7 @@ const foregroundColors: { [key: string]: { color: ChromaColor, start: string, en
     "brightMagenta": { color: brightMagenta, start: "\x1b[95m", end: "\x1b[39m" },
     "brightCyan": { color: brightCyan, start: "\x1b[96m", end: "\x1b[39m" },
     "brightWhite": { color: brightWhite, start: "\x1b[97m", end: "\x1b[39m" }
-}
+};
 
 const backgroundColors: { [key: string]: { color: ChromaColor, start: string, end: string } } = {
     black: { color: bgBlack, start: "\x1b[40m", end: "\x1b[49m" },

@@ -35,7 +35,7 @@ export function _createCsiColor(color: IColorDef, reset: IColorDef = DEFAULT_RES
         _activeTheme.v.listen((sysTheme) => {
             themeFormatter = _getFormatter(sysTheme, color, reset);
         });
-    }
+    };
 
     function format(value: string): string {
         let result = value;

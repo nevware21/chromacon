@@ -36,7 +36,7 @@ import { _activeTheme } from "../theme/_activeTheme";
  */
 /*#__NO_SIDE_EFFECTS__*/
 export function setColorDetector(detectFn: () => ColorLevel): void {
-    // _resetRuntime();
+    _resetRuntime();
     if (_activeTheme.v) {
         _activeTheme.v.detector(detectFn);
     }
