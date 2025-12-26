@@ -13,6 +13,7 @@ import { STRIP_ANSI_REGEXP } from "./stripAnsi";
  * Parse ANSI escape codes in a string, returning both the escape codes and the string components.
  * @param value - The string to parse.
  * @returns The parsed ANSI escape codes and the string components.
+ * @since 0.1.3
  * @example
  * ```ts
  * parseAnsi("\u001b[31municorn\u001b[39m");

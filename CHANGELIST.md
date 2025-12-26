@@ -1,3 +1,69 @@
+# v0.1.3, Dec 26th 2025
+
+## New Features
+
+### Text Processing Utilities
+
+- **Added `escapeAnsi()` Function**: New utility that escapes ANSI escape sequences in strings by converting them to their string representation
+  - Converts `\x1b` to `\\x1b` for visible display of ANSI codes
+  - Useful for debugging, logging, and displaying formatted text as plain text
+  - Handles all ANSI escape sequence types including colors, styles, cursor movements, and terminal links
+  - See [escapeAnsi API](https://nevware21.github.io/chromacon/typedoc/core/functions/escapeAnsi.html) for details
+
+- **Added `replaceAnsi()` Function**: Replace ANSI escape sequences with custom content
+  - Supports string replacement or custom callback functions for advanced transformations
+  - Enables flexible text processing and format conversion
+  - Perfect for sanitizing or transforming colored output
+  - See [replaceAnsi API](https://nevware21.github.io/chromacon/typedoc/core/functions/replaceAnsi.html) for details
+
+- **Exposed `parseAnsi()` Function**: Previously internal, now publicly available for parsing ANSI sequences
+  - Parse ANSI escape sequences into structured data
+  - Returns detailed information about escape codes, positions, and content
+  - Enables advanced ANSI sequence analysis and manipulation
+  - See [parseAnsi API](https://nevware21.github.io/chromacon/typedoc/core/functions/parseAnsi.html) for details
+
+### Enhancements
+
+- **Improved Code Organization**: Reordered function files to avoid circular dependencies for better maintainability
+- **Enhanced Linting**: Added auto semi-colon fixing to ESLint configuration for consistent code style
+
+### Dependencies
+
+- **Updated Dependencies**: Bumped various development dependencies including:
+  - chai from 6.2.1 to 6.2.2
+  - puppeteer from 24.32.1 to 24.34.0
+  - @microsoft/rush from 5.163.0 to 5.164.0
+  - peter-evans/rebase from 2 to 4
+
+### CI/CD Improvements
+
+- **Enhanced sync-rush-versions Workflow**: Multiple improvements to the automated rush version synchronization workflow
+  - Added write permissions for commits
+  - Fixed detached HEAD error handling
+  - Improved git diff glob patterns
+  - Added fetch-depth configuration for checkout action
+  - Included common/scripts in workflow commits
+
+### Links
+
+- **Pull Requests & Issues**:
+  - [#124: Add additional functions, escapeAnsi, replaceAnsi, expose parseAnsi](https://github.com/nevware21/chromacon/pull/124)
+  - [#123: Bump chai from 6.2.1 to 6.2.2 in /core](https://github.com/nevware21/chromacon/pull/123)
+  - [#122: Bump puppeteer from 24.33.1 to 24.34.0 in the puppeteer group](https://github.com/nevware21/chromacon/pull/122)
+  - [#121: Include common/scripts in sync-rush-versions workflow commits](https://github.com/nevware21/chromacon/pull/121)
+  - [#120: Add write permissions to sync-rush-versions workflow](https://github.com/nevware21/chromacon/pull/120)
+  - [#119: Bump puppeteer from 24.33.0 to 24.33.1 in the puppeteer group](https://github.com/nevware21/chromacon/pull/119)
+  - [#118: Fix sync-rush-versions workflow detached HEAD error](https://github.com/nevware21/chromacon/pull/118)
+  - [#117: Fix git diff glob pattern in sync-rush-versions workflow](https://github.com/nevware21/chromacon/pull/117)
+  - [#116: Update sync-rush-versions.yml](https://github.com/nevware21/chromacon/pull/116)
+  - [#115: Add fetch-depth to checkout action in workflow](https://github.com/nevware21/chromacon/pull/115)
+  - [#114: Bump @microsoft/rush from 5.163.0 to 5.164.0](https://github.com/nevware21/chromacon/pull/114)
+  - [#109: Bump peter-evans/rebase from 2 to 4](https://github.com/nevware21/chromacon/pull/109)
+  - [#105: Bump puppeteer from 24.32.1 to 24.33.0 in the puppeteer group](https://github.com/nevware21/chromacon/pull/105)
+- **Full Changelog**: https://github.com/nevware21/chromacon/compare/v0.1.2...v0.1.3
+
+---
+
 # v0.1.2, Dec 10th 2025
 
 ## New Features
