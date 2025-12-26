@@ -78,7 +78,7 @@ export function _createSysTheme(themeDef?: ITheme): _ISystemTheme {
         let theLevel: ColorLevel | null = null;
 
         // Auto-detect the color level
-        // _resetRuntime();
+        _resetRuntime();
         if (detector) {
             // Use the supplied detector
             let result = safe(detector);

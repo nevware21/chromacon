@@ -145,7 +145,7 @@ describe("detectColorSupport", () => {
         });
 
         afterEach(() => {
-            global.process = orgProcess
+            global.process = orgProcess;
             objDefine(global, "navigator", {
                 v: orgNavigator
             });

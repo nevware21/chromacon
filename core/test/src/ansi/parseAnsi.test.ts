@@ -7,7 +7,7 @@
  */
 
 import { assert } from "@nevware21/tripwire";
-import { parseAnsi } from "../../../src/ansi/stripAnsi";
+import { parseAnsi } from "../../../src/ansi/parseAnsi";
 
 describe("parseAnsi", () => {
     it("should return an empty array for a string without ANSI codes", () => {

@@ -6,7 +6,7 @@
  * Licensed under the MIT license.
  */
 
-import { isNullOrUndefined } from "@nevware21/ts-utils";
+import { isFunction } from "@nevware21/ts-utils";
 
 // https://en.wikipedia.org/wiki/ANSI_escape_code
 // ANSI Escape Sequences: https://gist.github.com/ConnerWill/d4b6c776b509add763e17f9f113fd25b#file-ansi-escape-sequences-md
@@ -99,7 +99,7 @@ import { isNullOrUndefined } from "@nevware21/ts-utils";
 // nF Sequence: ESC 0x20—0x2F ... ( !"#$%&'()*+,-./)+  0x30-0x7E (0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`a-z{|}~)
 
 // eslint-disable-next-line no-control-regex
-const STRIP_ANSI_REGEXP = /(?:(?:\x1b\[|\x9b)[\x30-\x3f]*[\x40-\x7e]|(?:(?:\x1bX|\x98)[^\x98\x9c\x07\x1b]*|(?:\x1b[\]P_^]|[\x90\x9d-\x9f])[\x08-\x0d\x20-\x7e]*)(?:[\x07\x9c]|\x1b\\)|\x1b[\x20-\x2f]+[\x30-\x7e]|(?:\x1b[0356]n{0,1})|(?:\x1b[124\x37-\x4fQ-WYZ\\\x60-\x7e]|[\x80-\x8f\x91-\x9a\x9c]))/g;
+export const STRIP_ANSI_REGEXP = /(?:(?:\x1b\[|\x9b)[\x30-\x3f]*[\x40-\x7e]|(?:(?:\x1bX|\x98)[^\x98\x9c\x07\x1b]*|(?:\x1b[\]P_^]|[\x90\x9d-\x9f])[\x08-\x0d\x20-\x7e]*)(?:[\x07\x9c]|\x1b\\)|\x1b[\x20-\x2f]+[\x30-\x7e]|(?:\x1b[0356]n{0,1})|(?:\x1b[124\x37-\x4fQ-WYZ\\\x60-\x7e]|[\x80-\x8f\x91-\x9a\x9c]))/g;
 //                            <= CSI                              =>|<= SOS (Term with ST)              =>|<= OSC/DSC/APC/PM (Term with ST)           =><=-- ST                  --=>|<= nF                    =>|<= VT100 DSR      =>|<= Fp/Fe/Fs                                                  =>
 
 /**
@@ -119,52 +119,50 @@ const STRIP_ANSI_REGEXP = /(?:(?:\x1b\[|\x9b)[\x30-\x3f]*[\x40-\x7e]|(?:(?:\x1bX
  */
 /*#__NO_SIDE_EFFECTS__*/
 export function stripAnsi(value: string): string {
-    return (value && value.replace) ? value.replace(STRIP_ANSI_REGEXP, "") : value;
+    return replaceAnsi(value, "");
 }
 
 /**
- * Match ANSI escape codes in a string.
- * @param value - The string to match.
- * @returns The ANSI escape codes.
+ * A function that can be used to replace ANSI escape sequences in a string.
+ * @param substring - The matched ANSI escape sequence.
+ * @param args - Additional arguments passed by the `String.prototype.replace` method.
+ * @returns The replacement string.
+ * @since 0.1.3
  * @example
  * ```ts
- * matchAnsi("\u001b[31municorn\u001b[39m");
- * //=> ['\u001b[31m', '\u001b[39m']
- *
- * matchAnsi("\u001b]8;;https://github.com\u0007Click\u001b]8;;\u0007");
- * //=> ['\u001b]8;;https://github.com\u0007', '\u001b]8;;\u0007']
- *
- * matchAnsi("\u001b[38;2;255;0;0mHello \u001b[0mDarkness \u001B[00;38;5;244m\u001B[m\u001B[00;38;5;33mmy \u001B[0mold");
- * //=> ["\u001b[38;2;255;0;0m", "\u001b[0m", "\u001B[00;38;5;244m", "\u001B[m", "\u001B[00;38;5;33m", "\u001B[0m"]
+ * const replacer: ReplacerFn = (match) => match === "\u001b[31m" ? "" : match;
+ * replaceAnsi("\u001b[31mHello\u001b[39m", replacer);
+ * ```
+ */
+export type ReplacerFn = (match: string, ...args: any[]) => string;
+
+/**
+ * Replaces ANSI escape sequences in a string with a specified replacement,
+ * either by using a replacement string or a replacement function.
+ * @param value - The string containing ANSI escape sequences to be replaced.
+ * @param replacer - A function or string used to replace the ANSI escape sequences.
+ * @returns The string with ANSI escape sequences replaced.
+ * @since 0.1.3
+ * @example
+ * ```ts
+ * replaceAnsi("\u001b[31mHello\u001b[39m", (substring) => substring === "\u001b[31m" ? "" : substring);
+ * replaceAnsi("\u001b[31mHello\u001b[39m", "");
+ * replaceAnsi("\u001b[31mHello\u001b[39m", (substring, offset, string) => {
+ *     console.log(substring, offset, string);
+ *     return "";
+ * });
  * ```
  */
 /*#__NO_SIDE_EFFECTS__*/
-export function matchAnsi(value: string): string[] {
-    return (value && value.match) ? value.match(STRIP_ANSI_REGEXP) || [] : [];
-}
-
-/**
- * Parse ANSI escape codes in a string.
- * @param value - The string to parse.
- * @returns The parsed ANSI escape codes and the string components.
- */
-/*#__NO_SIDE_EFFECTS__*/
-export function parseAnsi(value: string): string[] {
-    const result: string[] = [];
-    let match: RegExpExecArray | null;
-    let lastIndex = 0;
-    if (!isNullOrUndefined(value)) {
-        while ((match = STRIP_ANSI_REGEXP.exec(value)) !== null) {
-            if (lastIndex != match.index) {
-                result.push(value.substring(lastIndex, match.index));
-            }
-
-            result.push(match[0]);
-            lastIndex = match.index + match[0].length;
-        }
-
-        if (lastIndex < value.length) {
-            result.push(value.substring(lastIndex));
+export function replaceAnsi(value: string, replacer: ReplacerFn | string): string {
+    let result = value;
+    if (value && isFunction(value.replace)) {
+        if (isFunction(replacer)) {
+            // Create a new regular expression to ensure that any recursive calls to
+            // replaceAnsi do not interfere with the original regular expression
+            result = value.replace(new RegExp(STRIP_ANSI_REGEXP), replacer);
+        } else {
+            result = value.replace(STRIP_ANSI_REGEXP, replacer as string);
         }
     }
 

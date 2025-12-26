@@ -2,14 +2,14 @@
     {
         "name": "es5-full",
         "path": "core/dist/es5/mod/chromacon.js",
-        "limit": "10.5 kb",
+        "limit": "11 kb",
         "brotli": false,
         "ignore": [ "process", "os" ]
     },
     {
         "name": "es6-full",
         "path": "core/dist/es6/mod/chromacon.js",
-        "limit": "10 kb",
+        "limit": "10.5 kb",
         "brotli": false,
         "ignore": [ "process", "os" ]
     },

@@ -11,7 +11,7 @@ import {
     bold, dim, normal, italic, underline, blink, inverse, hidden, strikethrough,
     framed, encircled, overlined, reset
 } from "../../../src/ansi/styles";
-import { red, green, blue } from "../../../src/ansi/colors";
+import { red, green } from "../../../src/ansi/colors";
 import { asString } from "@nevware21/ts-utils";
 import { setColorLevel } from "../../../src/utils/supported";
 import { ColorLevel } from "../../../src/enums/ColorLevel";
@@ -22,7 +22,7 @@ const colorNames: { [key: number]: string } = {
     [ColorLevel.Basic]: "Basic",
     [ColorLevel.Ansi256]: "Rgb256",
     [ColorLevel.Rgb]: "TrueColor"
-}
+};
 
 const styles: { [key: string]: { style: CsiStyle, start: string, end: string } } = {
     "bold": { style: bold, start: "\x1b[1m", end: "\x1b[22m" },
@@ -37,7 +37,7 @@ const styles: { [key: string]: { style: CsiStyle, start: string, end: string } }
     "framed": { style: framed, start: "\x1b[51m", end: "\x1b[54m" },
     "encircled": { style: encircled, start: "\x1b[52m", end: "\x1b[0m" },
     "overlined": { style: overlined, start: "\x1b[53m", end: "\x1b[55m" }
-}
+};
 
 function _format(value: string) {
     // eslint-disable-next-line no-control-regex

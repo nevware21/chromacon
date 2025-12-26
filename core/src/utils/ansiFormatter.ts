@@ -83,7 +83,7 @@ export function createAnsiFormatter(colorLevel: ColorLevel, enable: IColorDef, d
             let res = value;
 
             if (colorLevel && ansiEnable) {
-                res =  _ansiFormatter(colorLevel, value, ansiEnable, ansiDisable, strDisable, isReset)
+                res =  _ansiFormatter(colorLevel, value, ansiEnable, ansiDisable, strDisable, isReset);
             }
 
             return res;
