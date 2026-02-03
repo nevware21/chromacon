@@ -108,7 +108,6 @@
         "@nevware21/publish-npm": "^0.1.4",
         "@size-limit/esbuild-why": "12.0.0",
         "@size-limit/preset-small-lib": "12.0.0",
-        "@types/chai": "^5.2.3",
         "@types/eslint": "^9.6.1",
         "@types/estree": "^1.0.0",
         "@types/jquery": "^3.5.14",
