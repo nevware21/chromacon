@@ -9,7 +9,7 @@
 import { ICachedValue, objDefine, safe } from "@nevware21/ts-utils";
 
 /*#__NO_SIDE_EFFECTS__*/
-export function _lazyGetValue<T = boolean, F extends (...args: any[]) => T = () => T>(cb: F, defValue: T, argArray?: Parameters<F>): ICachedValue<T> {
+export function _lazyGetValue<T, F extends (...args: any[]) => T = (...args: any[]) => T>(cb: F | ((...args: any[]) => T), defValue: T, argArray?: Parameters<F>): ICachedValue<T> {
     let lazyValue = { } as ICachedValue<T>;
     objDefine(lazyValue, "v", {
         g: () => {
