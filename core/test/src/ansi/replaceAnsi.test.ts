@@ -8,6 +8,8 @@
 
 import { assert, expect } from "@nevware21/tripwire";
 import { replaceAnsi } from "../../../src/ansi/stripAnsi";
+import { escapeAnsi } from "../../../src/ansi/escapeAnsi";
+import { gray, green, red } from "../../../src/ansi/colors";
 
 describe("replaceAnsi", () => {
 
@@ -465,6 +467,19 @@ describe("replaceAnsi", () => {
             const withReplaceAnsi = replaceAnsi(input, "");
             // stripAnsi internally uses replaceAnsi
             expect(withReplaceAnsi).equal("Hello Darkness");
+        });
+    });
+
+    describe("integration with escapeAnsi and colors", () => {
+        it("should replace ANSI codes with escaped versions wrapped in gray", () => {
+            const input = red("Hello") + " " + green("Darkness");
+            const output = replaceAnsi(input, (match) => {
+                return gray(escapeAnsi(match));
+            });
+            
+            // The exact expected output with escaped ANSI codes wrapped in gray
+            const expected = "\x1b[90m\\x1b[31m\x1b[39mHello\x1b[90m\\x1b[39m\x1b[39m \x1b[90m\\x1b[32m\x1b[39mDarkness\x1b[90m\\x1b[39m\x1b[39m";
+            assert.equal(output, expected, escapeAnsi(output));
         });
     });
 });
