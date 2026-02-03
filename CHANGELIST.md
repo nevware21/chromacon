@@ -35,15 +35,6 @@
   - @microsoft/rush from 5.163.0 to 5.164.0
   - peter-evans/rebase from 2 to 4
 
-### CI/CD Improvements
-
-- **Enhanced sync-rush-versions Workflow**: Multiple improvements to the automated rush version synchronization workflow
-  - Added write permissions for commits
-  - Fixed detached HEAD error handling
-  - Improved git diff glob patterns
-  - Added fetch-depth configuration for checkout action
-  - Included common/scripts in workflow commits
-
 ### Links
 
 - **Pull Requests & Issues**:
