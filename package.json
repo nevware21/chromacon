@@ -1,7 +1,7 @@
 {
     "name": "@nevware21/chromacon",
     "description": "Text formatting utilities to colorize your text output.",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "homepage": "https://github.com/nevware21/chromacon",
     "sideEffects": false,
     "license": "MIT",
