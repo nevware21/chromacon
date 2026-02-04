@@ -1,3 +1,52 @@
+# v0.1.4, Feb 3rd 2026
+
+## Enhancements
+
+### Code Quality & Maintenance
+
+- **Removed Unused Dependencies**: Cleaned up chai and @types/chai packages that were no longer being used
+  - Reduces package size and dependency surface area
+  - Improves installation times
+  - See [#143: Remove unused chai dependencies](https://github.com/nevware21/chromacon/pull/143)
+
+- **Enhanced Test Coverage**: Added additional test cases for `replaceAnsi()` function
+  - Improves code reliability and edge case handling
+  - See [#140: Add additional replaceAnsi test](https://github.com/nevware21/chromacon/pull/140)
+
+### Dependencies
+
+- **Updated @nevware21/ts-utils**: Bumped minimum version from 0.11.8 to 0.12.6
+  - Includes latest improvements and fixes from ts-utils library
+  - Fixed internal typing issue with `_lazyGetValue`
+  - See [#139: Bump @nevware21/ts-utils minimum version to 0.12.6](https://github.com/nevware21/chromacon/pull/139)
+
+- **Updated Development Dependencies**:
+  - @types/node from 24.10.9 to 25.1.0
+  - puppeteer from 24.34.0 to 24.36.1
+  - @microsoft/rush from 5.164.0 to 5.166.0
+  - lewagon/wait-on-check-action from 1.4.1 to 1.5.0
+
+### Links
+
+- **Pull Requests & Issues**:
+  - [#143: Remove unused chai dependencies](https://github.com/nevware21/chromacon/pull/143)
+  - [#141: Update Changelist for 0.1.3](https://github.com/nevware21/chromacon/pull/141)
+  - [#140: Add additional replaceAnsi test](https://github.com/nevware21/chromacon/pull/140)
+  - [#139: Bump @nevware21/ts-utils minimum version to 0.12.6](https://github.com/nevware21/chromacon/pull/139)
+  - [#137: Bump @types/node from 24.10.9 to 25.1.0](https://github.com/nevware21/chromacon/pull/137)
+  - [#136: Bump puppeteer from 24.36.0 to 24.36.1](https://github.com/nevware21/chromacon/pull/136)
+  - [#134: Bump lewagon/wait-on-check-action from 1.4.1 to 1.5.0](https://github.com/nevware21/chromacon/pull/134)
+  - [#133: Bump puppeteer from 24.35.0 to 24.36.0](https://github.com/nevware21/chromacon/pull/133)
+  - [#131: Bump @microsoft/rush from 5.165.0 to 5.166.0](https://github.com/nevware21/chromacon/pull/131)
+  - [#130: Bump puppeteer from 24.34.0 to 24.35.0](https://github.com/nevware21/chromacon/pull/130)
+  - [#129: Delete .github/workflows/sync-rush-versions.yml](https://github.com/nevware21/chromacon/pull/129)
+  - [#128: Update auto-approve conditions for PRs](https://github.com/nevware21/chromacon/pull/128)
+  - [#127: Update GitHub Actions workflow for Rush version sync](https://github.com/nevware21/chromacon/pull/127)
+  - [#126: Bump @microsoft/rush from 5.164.0 to 5.165.0](https://github.com/nevware21/chromacon/pull/126)
+- **Full Changelog**: https://github.com/nevware21/chromacon/compare/v0.1.3...v0.1.4
+
+---
+
 # v0.1.3, Dec 26th 2025
 
 ## New Features
