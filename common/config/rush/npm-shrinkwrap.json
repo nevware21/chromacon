@@ -39,7 +39,7 @@
         "karma-typescript": "^5.5.3",
         "mocha": "^10.0.0",
         "nyc": "^17.1.0",
-        "puppeteer": "24.37.1",
+        "puppeteer": "24.37.2",
         "rollup": "^4.53.3",
         "rollup-plugin-cleanup": "^3.2.1",
         "rollup-plugin-istanbul": "^5.0.0",
@@ -1136,7 +1136,7 @@
     "node_modules/@rush-temp/chromacon": {
       "version": "0.0.0",
       "resolved": "file:projects/chromacon.tgz",
-      "integrity": "sha512-npASPaZ/sVeG+6TRy5Ycr+GZRux6D9UiHYD0qkoD4Z95UzOPQGHKhGrTmzR1+0n334MGDtV8+47HD3Ybdqmsvw==",
+      "integrity": "sha512-gYEw5Dgzme4ahXnNpRuUCm9kMuMMTRMpqrGOr/dkAMUH5hnqjeM1Het1T6YFySg0PefPWmIQGR8wYpIKSoee7g==",
       "dependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@microsoft/api-extractor": "^7.34.4",
@@ -1168,7 +1168,7 @@
         "karma-typescript": "^5.5.3",
         "mocha": "^10.0.0",
         "nyc": "^17.1.0",
-        "puppeteer": "24.37.1",
+        "puppeteer": "24.37.2",
         "rollup": "^4.53.3",
         "rollup-plugin-cleanup": "^3.2.1",
         "rollup-plugin-istanbul": "^5.0.0",
@@ -6850,16 +6850,16 @@
       }
     },
     "node_modules/puppeteer": {
-      "version": "24.37.1",
-      "resolved": "https://registry.npmjs.org/puppeteer/-/puppeteer-24.37.1.tgz",
-      "integrity": "sha512-iugAcwjRIX6XsMS1dzWbjKKUcEE0ZmmRbV0T6RyTtXNSHyBdss0r9GYJ9eOjUZfOoWeKCIOAptogdHYoBbJDeA==",
+      "version": "24.37.2",
+      "resolved": "https://registry.npmjs.org/puppeteer/-/puppeteer-24.37.2.tgz",
+      "integrity": "sha512-FV1W/919ve0y0oiS/3Rp5XY4MUNUokpZOH/5M4MMDfrrvh6T9VbdKvAHrAFHBuCxvluDxhjra20W7Iz6HJUcIQ==",
       "hasInstallScript": true,
       "dependencies": {
         "@puppeteer/browsers": "2.12.0",
         "chromium-bidi": "13.1.1",
         "cosmiconfig": "^9.0.0",
         "devtools-protocol": "0.0.1566079",
-        "puppeteer-core": "24.37.1",
+        "puppeteer-core": "24.37.2",
         "typed-query-selector": "^2.12.0"
       },
       "bin": {
@@ -6870,9 +6870,9 @@
       }
     },
     "node_modules/puppeteer-core": {
-      "version": "24.37.1",
-      "resolved": "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-24.37.1.tgz",
-      "integrity": "sha512-ylRJReaA6kd/CrahdrxxnSZf5S2hf1QR0S39QeoS55fuBoOl4UggGPW94zheu9lmCokpRQpa7q8r98xYyiQl0Q==",
+      "version": "24.37.2",
+      "resolved": "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-24.37.2.tgz",
+      "integrity": "sha512-nN8qwE3TGF2vA/+xemPxbesntTuqD9vCGOiZL2uh8HES3pPzLX20MyQjB42dH2rhQ3W3TljZ4ZaKZ0yX/abQuw==",
       "dependencies": {
         "@puppeteer/browsers": "2.12.0",
         "chromium-bidi": "13.1.1",
