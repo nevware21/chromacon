@@ -8,7 +8,7 @@
 
 export function _debugLog(msg: string): void {
     //#if DEBUG
-    //#:(!{DEBUG}) console.log(msg);
+    console.log(msg);
     //#endif
 }
 

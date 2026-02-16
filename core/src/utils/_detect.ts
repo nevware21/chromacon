@@ -155,7 +155,7 @@ export function _detectColorSupport(): ColorLevel {
         }
     } catch (e) {
         //#if DEBUG
-        //#:(!{DEBUG}) _debugLog("detectColorSupport failed: " + e);
+        _debugLog("detectColorSupport failed: " + e);
         //#endif
     }
     
