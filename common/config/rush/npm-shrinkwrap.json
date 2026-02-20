@@ -39,7 +39,7 @@
         "karma-typescript": "^5.5.3",
         "mocha": "^10.0.0",
         "nyc": "^17.1.0",
-        "puppeteer": "24.37.4",
+        "puppeteer": "24.37.5",
         "rollup": "^4.53.3",
         "rollup-plugin-cleanup": "^3.2.1",
         "rollup-plugin-istanbul": "^5.0.0",
@@ -446,17 +446,17 @@
       }
     },
     "node_modules/@microsoft/api-extractor": {
-      "version": "7.57.0",
-      "resolved": "https://registry.npmjs.org/@microsoft/api-extractor/-/api-extractor-7.57.0.tgz",
-      "integrity": "sha512-ZWflRQNLRBgG4DPRDUB6DQR2AL2Z+gYU/1PIwFKna8c8c9IGF4h0FHtb73MbV0LfufqfzDVnpaLPXmOtDAeUaA==",
+      "version": "7.57.1",
+      "resolved": "https://registry.npmjs.org/@microsoft/api-extractor/-/api-extractor-7.57.1.tgz",
+      "integrity": "sha512-rTHuqQeI38kNgUoWNlCNrAJWgRA7s48DNZcMyPkQvTzb33EQL/a0FA8S1IAXh9133NG4/cJ19trXtBZSwZndsw==",
       "dependencies": {
-        "@microsoft/api-extractor-model": "7.33.0",
+        "@microsoft/api-extractor-model": "7.33.1",
         "@microsoft/tsdoc": "~0.16.0",
         "@microsoft/tsdoc-config": "~0.18.0",
-        "@rushstack/node-core-library": "5.20.0",
-        "@rushstack/rig-package": "0.7.0",
-        "@rushstack/terminal": "0.22.0",
-        "@rushstack/ts-command-line": "5.3.0",
+        "@rushstack/node-core-library": "5.20.1",
+        "@rushstack/rig-package": "0.7.1",
+        "@rushstack/terminal": "0.22.1",
+        "@rushstack/ts-command-line": "5.3.1",
         "diff": "~8.0.2",
         "lodash": "~4.17.23",
         "minimatch": "10.1.2",
@@ -470,13 +470,13 @@
       }
     },
     "node_modules/@microsoft/api-extractor-model": {
-      "version": "7.33.0",
-      "resolved": "https://registry.npmjs.org/@microsoft/api-extractor-model/-/api-extractor-model-7.33.0.tgz",
-      "integrity": "sha512-cMrvErE9yJz8aImpRztUfbO085WRSI4nsvMQ+VNGgHxiQO7s5LAXrt+B35RUghIsn0JdNdqIzusXXtKgSnXh7Q==",
+      "version": "7.33.1",
+      "resolved": "https://registry.npmjs.org/@microsoft/api-extractor-model/-/api-extractor-model-7.33.1.tgz",
+      "integrity": "sha512-KX0LI6xzI0gcBOXXmr5mnnbdhsK2W93pqvJo8OgJgWvRRh+wMEp0Ccj38h1XKeJ29E1tuAZKSUOfHUQ1WA8fZg==",
       "dependencies": {
         "@microsoft/tsdoc": "~0.16.0",
         "@microsoft/tsdoc-config": "~0.18.0",
-        "@rushstack/node-core-library": "5.20.0"
+        "@rushstack/node-core-library": "5.20.1"
       }
     },
     "node_modules/@microsoft/api-extractor/node_modules/typescript": {
@@ -1136,7 +1136,7 @@
     "node_modules/@rush-temp/chromacon": {
       "version": "0.0.0",
       "resolved": "file:projects/chromacon.tgz",
-      "integrity": "sha512-tL717bL8vQmD35hzZtuMpJBReOkWxu5GEygc3aVBmzS9V2sm2rEEnAJdzZP99QgI2HuMVxYO01pBZbyzng8Lfw==",
+      "integrity": "sha512-WAp10J6rUVSVXyutbyty13g25FdqANpU3+tl/7VnYFqsdign0xrcUhzq/WroMuPMqRzyUDNlPoJH8IT3K08Owg==",
       "dependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@microsoft/api-extractor": "^7.34.4",
@@ -1168,7 +1168,7 @@
         "karma-typescript": "^5.5.3",
         "mocha": "^10.0.0",
         "nyc": "^17.1.0",
-        "puppeteer": "24.37.4",
+        "puppeteer": "24.37.5",
         "rollup": "^4.53.3",
         "rollup-plugin-cleanup": "^3.2.1",
         "rollup-plugin-istanbul": "^5.0.0",
@@ -1182,9 +1182,9 @@
       }
     },
     "node_modules/@rushstack/node-core-library": {
-      "version": "5.20.0",
-      "resolved": "https://registry.npmjs.org/@rushstack/node-core-library/-/node-core-library-5.20.0.tgz",
-      "integrity": "sha512-yix/WFzuMPvbECgQjdzjDqynv7YQnrcGUfy56WU7QWAVcoN4uB1wCwpt3heo/ghHp2nINrRecPtVS7sQmqY+OA==",
+      "version": "5.20.1",
+      "resolved": "https://registry.npmjs.org/@rushstack/node-core-library/-/node-core-library-5.20.1.tgz",
+      "integrity": "sha512-QvxZyh+RsTJ77JpQkS9K9lJujh6lj5WyMxieT0bdACtwqxEkGB9zCuSMX5UlXRweaIgSpu1ztdHmhV07fKUpMg==",
       "dependencies": {
         "ajv": "~8.13.0",
         "ajv-draft-04": "~1.0.0",
@@ -1220,9 +1220,9 @@
       }
     },
     "node_modules/@rushstack/problem-matcher": {
-      "version": "0.2.0",
-      "resolved": "https://registry.npmjs.org/@rushstack/problem-matcher/-/problem-matcher-0.2.0.tgz",
-      "integrity": "sha512-IHV2qdypwqEatMg8Ka9e/q26pu2tOyhG3fuJZtrrPA3O++ctW8y1p6oCeeeIV8v1/kJ3xJPtg1xdZshyNZb8sg==",
+      "version": "0.2.1",
+      "resolved": "https://registry.npmjs.org/@rushstack/problem-matcher/-/problem-matcher-0.2.1.tgz",
+      "integrity": "sha512-gulfhBs6n+I5b7DvjKRfhMGyUejtSgOHTclF/eONr8hcgF1APEDjhxIsfdUYYMzC3rvLwGluqLjbwCFZ8nxrog==",
       "peerDependencies": {
         "@types/node": "*"
       },
@@ -1233,21 +1233,21 @@
       }
     },
     "node_modules/@rushstack/rig-package": {
-      "version": "0.7.0",
-      "resolved": "https://registry.npmjs.org/@rushstack/rig-package/-/rig-package-0.7.0.tgz",
-      "integrity": "sha512-iPHSnI/DtLPv2lydP9WWZczhD9knVCJWwLle1H01IYnvYNkhZX8rbnuUH+HEwcANd3YlLjCpXydWN3LMoLOxPw==",
+      "version": "0.7.1",
+      "resolved": "https://registry.npmjs.org/@rushstack/rig-package/-/rig-package-0.7.1.tgz",
+      "integrity": "sha512-hLwDnp4yMcAd/gcUol8NPWNctpIXzVOgMyhZ8DagnEJls9TOZd0xF//5hS+YTiX7/+4rLfBra+NoB3rtFxjDdA==",
       "dependencies": {
         "resolve": "~1.22.1",
         "strip-json-comments": "~3.1.1"
       }
     },
     "node_modules/@rushstack/terminal": {
-      "version": "0.22.0",
-      "resolved": "https://registry.npmjs.org/@rushstack/terminal/-/terminal-0.22.0.tgz",
-      "integrity": "sha512-z5O2g5dws5iFNe3hAutAKLPmQARJs/VEWMxdpyew+xm0ohw1qh1G6+wY0nUzFPrLiKQjU+8KNA11VAEMb46ETg==",
+      "version": "0.22.1",
+      "resolved": "https://registry.npmjs.org/@rushstack/terminal/-/terminal-0.22.1.tgz",
+      "integrity": "sha512-Mdtu0VN7v31O5Zcno8ZZH5kQHF13Ez7WN9Aio7nFJVcR36i4bkERionYrWgBDQJ0JdVPLKGecZER/xRU5IvGLw==",
       "dependencies": {
-        "@rushstack/node-core-library": "5.20.0",
-        "@rushstack/problem-matcher": "0.2.0",
+        "@rushstack/node-core-library": "5.20.1",
+        "@rushstack/problem-matcher": "0.2.1",
         "supports-color": "~8.1.1"
       },
       "peerDependencies": {
@@ -1260,11 +1260,11 @@
       }
     },
     "node_modules/@rushstack/ts-command-line": {
-      "version": "5.3.0",
-      "resolved": "https://registry.npmjs.org/@rushstack/ts-command-line/-/ts-command-line-5.3.0.tgz",
-      "integrity": "sha512-4hneaVxA5zPC8cwUGZtdvCUzGbW8A+b+qrBK3hYs/xO7TyWkgAMKxq/6FJY91fPG8awgmJ+s1w8GuqNXgxsTyw==",
+      "version": "5.3.1",
+      "resolved": "https://registry.npmjs.org/@rushstack/ts-command-line/-/ts-command-line-5.3.1.tgz",
+      "integrity": "sha512-mid/JIZSJafwy3x9e4v0wVLuAqSSYYErEHV0HXPALYLSBN13YNkR5caOk0hf97lSRKrxhtvQjGaDKSEelR3sMg==",
       "dependencies": {
-        "@rushstack/terminal": "0.22.0",
+        "@rushstack/terminal": "0.22.1",
         "@types/argparse": "1.0.38",
         "argparse": "~1.0.9",
         "string-argv": "~0.3.1"
@@ -6854,16 +6854,16 @@
       }
     },
     "node_modules/puppeteer": {
-      "version": "24.37.4",
-      "resolved": "https://registry.npmjs.org/puppeteer/-/puppeteer-24.37.4.tgz",
-      "integrity": "sha512-SMSq+FL3gnglolhrIks3maRkrdQEjoDCesy6FXziMPWsF1DxoX+GVxRa82y+euzkzS52/UujM/BoaFPQ+AnPXQ==",
+      "version": "24.37.5",
+      "resolved": "https://registry.npmjs.org/puppeteer/-/puppeteer-24.37.5.tgz",
+      "integrity": "sha512-3PAOIQLceyEmn1Fi76GkGO2EVxztv5OtdlB1m8hMUZL3f8KDHnlvXbvCXv+Ls7KzF1R0KdKBqLuT/Hhrok12hQ==",
       "hasInstallScript": true,
       "dependencies": {
         "@puppeteer/browsers": "2.13.0",
         "chromium-bidi": "14.0.0",
         "cosmiconfig": "^9.0.0",
         "devtools-protocol": "0.0.1566079",
-        "puppeteer-core": "24.37.4",
+        "puppeteer-core": "24.37.5",
         "typed-query-selector": "^2.12.0"
       },
       "bin": {
@@ -6874,9 +6874,9 @@
       }
     },
     "node_modules/puppeteer-core": {
-      "version": "24.37.4",
-      "resolved": "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-24.37.4.tgz",
-      "integrity": "sha512-sQYtYgaNaLYO82k2FHmr7bR1tCmo2fBupEI7Kd0WpBlMropNcfxSTLOJXVRkhiHig0dUiMI7g0yq+HJI1IDCzg==",
+      "version": "24.37.5",
+      "resolved": "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-24.37.5.tgz",
+      "integrity": "sha512-ybL7iE78YPN4T6J+sPLO7r0lSByp/0NN6PvfBEql219cOnttoTFzCWKiBOjstXSqi/OKpwae623DWAsL7cn2MQ==",
       "dependencies": {
         "@puppeteer/browsers": "2.13.0",
         "chromium-bidi": "14.0.0",
