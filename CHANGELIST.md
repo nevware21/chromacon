@@ -1,3 +1,15 @@
+# Unreleased
+
+## Breaking Changes
+
+### CI / Tooling
+
+- **Updated NodeCI Matrix**: Removed Node.js 16 and added Node.js 24 in CI
+  - Node.js 16 is End-of-Life and no longer supported by required dependencies (for example `puppeteer`, `@pnpm/error`)
+  - Node.js 16 CI jobs were failing due to missing `structuredClone`
+
+---
+
 # v0.1.4, Feb 3rd 2026
 
 ## Enhancements
@@ -228,4 +240,3 @@ This is the first release of **@nevware21/chromacon** - a powerful, TypeScript/J
 ---
 
 **Full Changelog**: https://github.com/nevware21/chromacon/commits/v0.1.0
-
