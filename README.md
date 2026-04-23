@@ -233,7 +233,7 @@ setColorLevel(ColorLevel.None);     // Disable color formatting
 ## Environment Support
 
 ### Test Environments 
-- Node.js (16, 18, 20, 22)
+- Node.js (18, 20, 22, 24)
 - Browser (Chromium - headless)
 - Web Worker (Chromium - headless)
 
