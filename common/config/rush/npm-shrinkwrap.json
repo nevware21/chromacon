@@ -1104,7 +1104,7 @@
     "node_modules/@rush-temp/chromacon": {
       "version": "0.0.0",
       "resolved": "file:projects/chromacon.tgz",
-      "integrity": "sha512-dD5xKhu+7uHR8bJESa9n7XxGomU6XHDTU8mDAAPaXQq4N6nF1deZOvMR6rJmv/h/gYvHwzWmr6fVIrHAoNO96A==",
+      "integrity": "sha512-ZuQKPTEr5eu+KW5pKsqaXONVTTGdnKPUP/p1W4Bs2e5sL2kjBKzpqmjdxw3OxXJT5+Si1Gq2irR/WM3dNPzOUw==",
       "dependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@microsoft/api-extractor": "^7.34.4",
