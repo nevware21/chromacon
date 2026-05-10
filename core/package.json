@@ -60,10 +60,16 @@
         },
         "./package.json": "./package.json"
     },
-    "funding": {
-        "type": "github",
-        "url": "https://github.com/sponsors/nevware21"
-    },
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/nevware21"
+        },
+        {
+            "type": "buymeacoffee",
+            "url": "https://buymeacoffee.com/nevware21"
+        }
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/nevware21/chromacon.git"
