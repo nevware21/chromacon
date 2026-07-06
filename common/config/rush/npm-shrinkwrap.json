@@ -22,7 +22,7 @@
         "@rush-temp/chromacon": "file:./projects/chromacon.tgz",
         "@types/mocha": "^10.0.1",
         "@types/node": "^25.1.0",
-        "@types/sinon": "^21.0.0",
+        "@types/sinon": "^22.0.0",
         "chromium": "^3.0.3",
         "copyfiles": "^2.4.1",
         "cross-env": "^10.1.0",
@@ -1242,7 +1242,7 @@
     "node_modules/@rush-temp/chromacon": {
       "version": "0.0.0",
       "resolved": "file:projects/chromacon.tgz",
-      "integrity": "sha512-o5A4DzrGe1Nnb5tv/B+BphtmJ2u23J51l2pBi2AM1uas1JSiIwD6yjC3tGyGt3669/BZXGHuBD3hFgW+fm/86w==",
+      "integrity": "sha512-Qr7nj5cnZTA9q+xppVXmta/M0qNQGJv0m+iOCLb086NgoS0No+tPQEkuVwQZVZalYU2ffTLAB9IcX/1H4Jq62g==",
       "dependencies": {
         "@istanbuljs/nyc-config-typescript": "^1.0.2",
         "@microsoft/api-extractor": "^7.34.4",
@@ -1257,7 +1257,7 @@
         "@rollup/plugin-typescript": "^12.3.0",
         "@types/mocha": "^10.0.1",
         "@types/node": "^25.1.0",
-        "@types/sinon": "^21.0.0",
+        "@types/sinon": "^22.0.0",
         "chromium": "^3.0.3",
         "copyfiles": "^2.4.1",
         "cross-env": "^10.1.0",
@@ -1554,9 +1554,9 @@
       }
     },
     "node_modules/@types/sinon": {
-      "version": "21.0.1",
-      "resolved": "https://registry.npmjs.org/@types/sinon/-/sinon-21.0.1.tgz",
-      "integrity": "sha512-5yoJSqLbjH8T9V2bksgRayuhpZy+723/z6wBOR+Soe4ZlXC0eW8Na71TeaZPUWDQvM7LYKa9UGFc6LRqxiR5fQ==",
+      "version": "22.0.0",
+      "resolved": "https://registry.npmjs.org/@types/sinon/-/sinon-22.0.0.tgz",
+      "integrity": "sha512-TDbVpbccc2HfiqHR09Argj3mHV1KMW7sCCKj52fsl8lbRLkEn7fB1966EWhOKWUBcqfBueZuPoA7/OK1CKiy3g==",
       "dependencies": {
         "@types/sinonjs__fake-timers": "*"
       }
@@ -2263,9 +2263,9 @@
       }
     },
     "node_modules/caniuse-lite": {
-      "version": "1.0.30001800",
-      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001800.tgz",
-      "integrity": "sha512-MMHtuAz9Ys840zAY5F4k6fV5GaivZ9sPk+nz0mY+GYVzRBnYkN0mpqkSR92oWRQ19yQWo4HvBV/FnC16AJX8MA==",
+      "version": "1.0.30001802",
+      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001802.tgz",
+      "integrity": "sha512-vmv8ub2xwTNmljSKf82mtCk5JH7hC+YgzLj3P5zotvA0tPQ9016tdNNOG8WRca1IxOnhSsivB+J0z5FeE5LOUw==",
       "funding": [
         {
           "type": "opencollective",
