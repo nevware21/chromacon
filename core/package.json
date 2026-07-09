@@ -148,11 +148,12 @@
         "sinon": "^22.0.0",
         "ts-mocha": "^10.0.0",
         "typedoc": "^0.28.15",
-        "typescript": "~5.2.2",
+        "typescript": "~7.0.2",
         "uglify-js": "^3.15.5",
         "copyfiles": "^2.4.1"
     }
 }
+
 
 
 
