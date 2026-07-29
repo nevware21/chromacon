@@ -49,6 +49,7 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }}
         
     - name: Size tests
+      if: matrix.node >= 22
       run: npm run size
 
     - name: Bundle Size Checks
