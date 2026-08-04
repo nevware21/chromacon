@@ -106,7 +106,7 @@
         "@nevware21/coverage-tools": ">= 0.1.4 < 2.x",
         "@nevware21/ts-preproc": ">= 0.1.4 < 2.x",
         "@nevware21/publish-npm": ">= 0.1.4 < 2.x",
-        "@size-limit/esbuild-why": "13.0.2",
+        "@size-limit/esbuild-why": "13.0.3",
         "@size-limit/preset-small-lib": "13.0.3",
         "@types/eslint": "^9.6.1",
         "@types/estree": "^1.0.0",
@@ -122,7 +122,7 @@
         "grunt-cli": "^1.4.3",
         "nyc": "^18.0.0",
         "puppeteer": "25.4.0",
-        "size-limit": "13.0.2",
+        "size-limit": "13.0.3",
         "typedoc": "^0.28.15",
         "typedoc-github-theme": "^0.4.0",
         "typescript": "~5.2.2"
