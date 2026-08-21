@@ -121,11 +121,12 @@
         "grunt": "^1.6.2",
         "grunt-cli": "^1.4.3",
         "nyc": "^18.0.0",
-        "puppeteer": "25.7.0",
+        "puppeteer": "25.8.0",
         "size-limit": "13.0.3",
         "typedoc": "^0.28.15",
         "typedoc-github-theme": "^0.4.0",
         "typescript": "~5.2.2"
     }
 }
+
 
