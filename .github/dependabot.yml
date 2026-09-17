@@ -33,6 +33,10 @@ updates:
         patterns:
           - "rollup*"
           - "@rollup/*"
+      size-limit:
+        patterns:
+          - "size-limit"
+          - "@size-limit/*"
       typescript:
         patterns:
           - "typescript*"
@@ -64,6 +68,10 @@ updates:
         patterns:
           - "rollup*"
           - "@rollup/*"
+      size-limit:
+        patterns:
+          - "size-limit"
+          - "@size-limit/*"
       typescript:
         patterns:
           - "typescript*"
