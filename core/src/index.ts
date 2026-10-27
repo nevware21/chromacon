@@ -17,6 +17,10 @@ export { stripAnsi, replaceAnsi, ReplacerFn } from "./ansi/stripAnsi";
 export { matchAnsi } from "./ansi/matchAnsi";
 export { parseAnsi } from "./ansi/parseAnsi";
 export { escapeAnsi } from "./ansi/escapeAnsi";
+export { parseAnsiStyles, createAnsiStyleParser, AnsiColor, IAnsiStyle, IAnsiStyledRun } from "./ansi/parseAnsiStyles";
+export { ansi256ToRgb, ansiColorToCss, DEFAULT_ANSI_PALETTE } from "./ansi/ansiColors";
+export { getSgrName } from "./ansi/sgrCodes";
+export { ansiToHtml, IAnsiToHtmlOptions } from "./ansi/ansiToHtml";
 
 export {
     setColorDetector, setColorLevel, getColorLevel,
