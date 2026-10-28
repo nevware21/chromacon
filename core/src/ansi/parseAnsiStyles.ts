@@ -106,6 +106,16 @@ function _makeColor(mode: number, args: number[]): AnsiColor | undefined {
     return undefined;
 }
 
+const SGR_ON: { [code: number]: string } = {
+    1: "bold", 2: "dim", 3: "italic", 5: "blink", 6: "blink", 7: "inverse", 8: "hidden",
+    9: "strikethrough", 21: "underline", 53: "overlined"
+};
+
+const SGR_OFF: { [code: number]: string } = {
+    22: "bold,dim", 23: "italic", 24: "underline", 25: "blink", 27: "inverse", 28: "hidden",
+    29: "strikethrough", 39: "fg", 49: "bg", 55: "overlined", 59: "ul"
+};
+
 function _off(style: IAnsiStyle, key: string) {
     delete (style as any)[key];
 }
@@ -147,12 +157,6 @@ function _applySgr(style: IAnsiStyle, paramText: string) {
             if (link !== undefined) {
                 style.link = link;
             }
-        } else if (code === 1) {
-            style.bold = true;
-        } else if (code === 2) {
-            style.dim = true;
-        } else if (code === 3) {
-            style.italic = true;
         } else if (code === 4) {
             const u = sub.length > 1 ? _toNum(sub[1]) : 1;
             if (u === 0) {
@@ -160,49 +164,15 @@ function _applySgr(style: IAnsiStyle, paramText: string) {
             } else {
                 style.underline = u === 2 ? "double" : true;
             }
-        } else if (code === 5 || code === 6) {
-            style.blink = true;
-        } else if (code === 7) {
-            style.inverse = true;
-        } else if (code === 8) {
-            style.hidden = true;
-        } else if (code === 9) {
-            style.strikethrough = true;
-        } else if (code === 21) {
-            style.underline = "double";
-        } else if (code === 22) {
-            _off(style, "bold");
-            _off(style, "dim");
-        } else if (code === 23) {
-            _off(style, "italic");
-        } else if (code === 24) {
-            _off(style, "underline");
-        } else if (code === 25) {
-            _off(style, "blink");
-        } else if (code === 27) {
-            _off(style, "inverse");
-        } else if (code === 28) {
-            _off(style, "hidden");
-        } else if (code === 29) {
-            _off(style, "strikethrough");
-        } else if (code >= 30 && code <= 37) {
-            style.fg = { type: "basic", index: code - 30 };
-        } else if (code === 39) {
-            _off(style, "fg");
-        } else if (code >= 40 && code <= 47) {
-            style.bg = { type: "basic", index: code - 40 };
-        } else if (code === 49) {
-            _off(style, "bg");
-        } else if (code === 53) {
-            style.overlined = true;
-        } else if (code === 55) {
-            _off(style, "overlined");
-        } else if (code === 59) {
-            _off(style, "ul");
-        } else if (code >= 90 && code <= 97) {
-            style.fg = { type: "basic", index: code - 90 + 8 };
-        } else if (code >= 100 && code <= 107) {
-            style.bg = { type: "basic", index: code - 100 + 8 };
+        } else if (SGR_ON[code]) {
+            (style as any)[SGR_ON[code]] = code === 21 ? "double" : true;
+        } else if (SGR_OFF[code]) {
+            SGR_OFF[code].split(",").forEach((k) => _off(style, k));
+        } else if (code <= 107 && ((code % 60 >= 30 && code % 60 <= 37) || (code % 60 >= 40 && code % 60 <= 47))) {
+            // 30-37 / 40-47 (basic) and 90-97 / 100-107 (bright, +8)
+            const bright = code >= 90 ? 8 : 0;
+            const base = code % 60;
+            (style as any)[base < 40 ? "fg" : "bg"] = { type: "basic", index: (base % 10) + bright };
         }
     }
 }

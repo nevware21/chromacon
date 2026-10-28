@@ -6,6 +6,7 @@
  * Licensed under the MIT license.
  */
 
+import { mathFloor, mathMax, mathMin } from "@nevware21/ts-utils";
 import { AnsiColor } from "./parseAnsiStyles";
 
 /**
@@ -17,7 +18,9 @@ export const DEFAULT_ANSI_PALETTE: string[] = [
     "#7f7f7f", "#ff0000", "#00ff00", "#ffff00", "#5c5cff", "#ff00ff", "#00ffff", "#ffffff"
 ];
 
-const CUBE = [0, 95, 135, 175, 215, 255];
+function _level(n: number): number {
+    return n ? 55 + n * 40 : 0;
+}
 
 function _hexToRgb(hex: string): { r: number; g: number; b: number } {
     let h = hex.replace("#", "");
@@ -35,16 +38,18 @@ function _hexToRgb(hex: string): { r: number; g: number; b: number } {
  * @since 0.1.5
  */
 export function ansi256ToRgb(index: number, palette?: string[]): { r: number; g: number; b: number } {
-    index = Math.max(0, Math.min(255, Math.floor(index) || 0));
+    index = mathMax(0, mathMin(255, mathFloor(index) || 0));
     if (index < 16) {
         return _hexToRgb((palette && palette[index]) || DEFAULT_ANSI_PALETTE[index]);
     }
 
     if (index < 232) {
+        // 6x6x6 color cube, levels are 0, 95, 135, 175, 215, 255
         const n = index - 16;
-        return { r: CUBE[Math.floor(n / 36)], g: CUBE[Math.floor(n / 6) % 6], b: CUBE[n % 6] };
+        return { r: _level(mathFloor(n / 36)), g: _level(mathFloor(n / 6) % 6), b: _level(n % 6) };
     }
 
+    // 24 step greyscale ramp
     const v = 8 + (index - 232) * 10;
     return { r: v, g: v, b: v };
 }
